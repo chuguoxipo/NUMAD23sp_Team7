@@ -45,11 +45,11 @@
         app:layout_constraintWidth_percent="0.45" />
 
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:src="@drawable/search"
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:background="@drawable/search"
         app:layout_constraintBottom_toBottomOf="@+id/search_plate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.076"
@@ -61,11 +61,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:elevation="4dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/search_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.344"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/search_button"
+        app:layout_constraintTop_toTopOf="@+id/search_button"
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintWidth_percent="0.2"/>
 
