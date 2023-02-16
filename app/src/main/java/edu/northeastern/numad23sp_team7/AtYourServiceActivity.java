@@ -52,6 +52,8 @@ public class AtYourServiceActivity extends AppCompatActivity {
                     // Populate the recycler view
                 });
             });
+
+            newThread.start();
         });
     }
 
