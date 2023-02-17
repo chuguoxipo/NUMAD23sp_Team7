@@ -21,8 +21,8 @@ import edu.northeastern.numad23sp_team7.model.Restaurant;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantViewHolder> {
 
-    private final List<Restaurant> restaurantList;
-    private final Context context;
+    private List<Restaurant> restaurantList;
+    private Context context;
 
     public RestaurantAdapter(List<Restaurant> restaurantList, Context context) {
         this.restaurantList = restaurantList;
@@ -33,7 +33,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantViewHolder
     @NonNull
     @Override
     public RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new RestaurantViewHolder(LayoutInflater.from(context).inflate(R.layout.restaurant_card, parent,false));
+        return new RestaurantViewHolder(LayoutInflater.from(context).inflate(R.layout.restaurant_card, parent, false));
     }
 
     @Override
@@ -51,5 +51,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantViewHolder
     @Override
     public int getItemCount() {
         return restaurantList.size();
+    }
+
+    public void setRestaurantList(List<Restaurant> restaurants) {
+        this.restaurantList = restaurants;
     }
 }

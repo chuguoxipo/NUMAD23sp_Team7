@@ -2,7 +2,6 @@ package edu.northeastern.numad23sp_team7;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,33 +43,41 @@ public class AtYourServiceActivity extends AppCompatActivity {
 
         searchButton = findViewById(R.id.search_button);
         apiClient = new YelpApiClient();
-        handler = new Handler();
-
-
-//        restaurants = apiClient.getRestaurants("Cake", "NYC");
-
-        Restaurant r = new Restaurant("https://s3-media3.fl.yelpcdn.com/bphoto/DH29qeTmPotJbCSzkjYJwg/o.jpg",
-                "Levain Bakery - New York", "4.5", "Bakeries");
-        restaurants.add(r);
-        restaurants.add(r);
 
         recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new RestaurantAdapter(this.restaurants, this));
+        rLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(rLayoutManager);
+        restaurantAdapter = new RestaurantAdapter(restaurants, this);
+        recyclerView.setAdapter(restaurantAdapter);
 
 
-//        searchButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Restaurant r = new Restaurant("https://s3-media3.fl.yelpcdn.com/bphoto/DH29qeTmPotJbCSzkjYJwg/o.jpg",
-//                        "Levain Bakery - New York", "4.5", "Bakeries");
-//
-//                restaurants.add(0,r);
-//
-//                restaurantAdapter.notifyItemInserted(0);
-//
-//            }
-//        });
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NetworkThread networkThread = new NetworkThread();
+                new Thread(networkThread).start();
+            }
+        });
+
+
+
+    }
+
+
+    private class NetworkThread implements Runnable {
+        @Override
+        public void run() {
+            // change searchTerm and location to inputs form editText and spinner
+           restaurants = apiClient.getRestaurants("cake", "NYC");
+           runOnUiThread(new Runnable() {
+               @Override
+               public void run() {
+                   restaurantAdapter.setRestaurantList(restaurants);
+                   restaurantAdapter.notifyDataSetChanged();
+               }
+           });
+
+        }
 
 
     }

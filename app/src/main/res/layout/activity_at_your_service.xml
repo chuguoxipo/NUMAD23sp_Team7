@@ -42,19 +42,21 @@
         app:layout_constraintStart_toStartOf="@id/title"
         app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_constraintVertical_bias="0"
-        app:layout_constraintWidth_percent="0.45" />
+        app:layout_constraintWidth_percent="0.5" />
 
 
     <Button
         android:id="@+id/search_button"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
-        android:background="@drawable/search"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:background="@drawable/button_selector"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="@+id/search_plate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.076"
+        app:layout_constraintHorizontal_bias="0.092"
         app:layout_constraintStart_toEndOf="@+id/search_plate"
-        app:layout_constraintTop_toTopOf="@+id/search_plate" />
+        app:layout_constraintTop_toTopOf="@+id/search_plate"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -64,16 +66,16 @@
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="@+id/search_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.344"
+        app:layout_constraintHorizontal_bias="0.354"
         app:layout_constraintStart_toEndOf="@+id/search_button"
         app:layout_constraintTop_toTopOf="@+id/search_button"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintWidth_percent="0.2"/>
+        app:layout_constraintVertical_bias="0.562"
+        app:layout_constraintWidth_percent="0.2" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="600dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
