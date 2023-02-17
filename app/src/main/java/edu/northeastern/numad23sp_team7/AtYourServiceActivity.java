@@ -2,6 +2,7 @@ package edu.northeastern.numad23sp_team7;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,6 +45,9 @@ public class AtYourServiceActivity extends AppCompatActivity {
         searchButton = findViewById(R.id.search_button);
         apiClient = new YelpApiClient();
 
+        String searchTerm = ""; // need to change to real input
+        String location = "NYC";  // need to change to real input
+
         recyclerView = findViewById(R.id.recycler_view);
         rLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(rLayoutManager);
@@ -54,28 +58,39 @@ public class AtYourServiceActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NetworkThread networkThread = new NetworkThread();
+                Log.d(TAG, "term:" + searchTerm);
+                NetworkThread networkThread = new NetworkThread(searchTerm, location);
                 new Thread(networkThread).start();
             }
         });
-
 
 
     }
 
 
     private class NetworkThread implements Runnable {
+        private String searchTerm;
+        private String location;
+
+        public NetworkThread(String searchTerm, String location) {
+            this.searchTerm = searchTerm;
+            this.location = location;
+        }
+
         @Override
         public void run() {
-            // change searchTerm and location to inputs form editText and spinner
-           restaurants = apiClient.getRestaurants("cake", "NYC");
-           runOnUiThread(new Runnable() {
-               @Override
-               public void run() {
-                   restaurantAdapter.setRestaurantList(restaurants);
-                   restaurantAdapter.notifyDataSetChanged();
-               }
-           });
+            // change searchTerm and location to inputs from EditText and Spinner
+            restaurants = apiClient.getRestaurants(searchTerm, location);
+
+            Log.d(TAG, "location:" + location);
+            Log.d(TAG, "r size:" + restaurants.size());
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    restaurantAdapter.setRestaurantList(restaurants);
+                    restaurantAdapter.notifyDataSetChanged();
+                }
+            });
 
         }
 
