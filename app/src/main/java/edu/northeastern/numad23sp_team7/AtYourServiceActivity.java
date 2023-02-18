@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 
@@ -35,8 +36,9 @@ public class AtYourServiceActivity extends AppCompatActivity {
     private List<String> locations = new ArrayList<>();
     private YelpApiClient apiClient;
     private List<Restaurant> restaurants = new ArrayList<>();
-    private Handler handler;
+    private Handler handler = new Handler();
     private String location;
+    private ProgressBar progressBar;
 
 
     private RecyclerView recyclerView;
@@ -67,6 +69,7 @@ public class AtYourServiceActivity extends AppCompatActivity {
         restaurantAdapter = new RestaurantAdapter(restaurants, this);
         recyclerView.setAdapter(restaurantAdapter);
         inputText = findViewById(R.id.search_plate);
+        progressBar = findViewById(R.id.progressBar);
 
 
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +112,15 @@ public class AtYourServiceActivity extends AppCompatActivity {
         @Override
         public void run() {
             // change searchTerm and location to inputs from EditText and Spinner
+            handler.post(() -> {
+                recyclerView.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
+            });
             restaurants = apiClient.getRestaurants(searchTerm, location);
+            handler.post(() -> {
+                progressBar.setVisibility(View.INVISIBLE);
+                recyclerView.setVisibility(View.VISIBLE);
+            });
 
             Log.d(TAG, "location:" + location);
             Log.d(TAG, "r size:" + restaurants.size());
