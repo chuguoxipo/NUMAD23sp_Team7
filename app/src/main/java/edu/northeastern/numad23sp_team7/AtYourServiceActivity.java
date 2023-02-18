@@ -1,15 +1,20 @@
 package edu.northeastern.numad23sp_team7;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -71,14 +76,24 @@ public class AtYourServiceActivity extends AppCompatActivity {
         inputText = findViewById(R.id.search_plate);
         progressBar = findViewById(R.id.progressBar);
 
+        inputText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    performSearch();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(inputText.getWindowToken(), 0);
+                    return true;
+                }
+
+                return false;
+            }
+        });
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String searchTerm = inputText.getText().toString();
-                Log.d(TAG, "term:" + searchTerm);
-                NetworkThread networkThread = new NetworkThread(searchTerm, location);
-                new Thread(networkThread).start();
+                performSearch();
             }
         });
 
@@ -97,6 +112,13 @@ public class AtYourServiceActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void performSearch() {
+        String searchTerm = inputText.getText().toString();
+        Log.d(TAG, "term:" + searchTerm);
+        NetworkThread networkThread = new NetworkThread(searchTerm, location);
+        new Thread(networkThread).start();
     }
 
 
