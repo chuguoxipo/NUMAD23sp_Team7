@@ -2,8 +2,6 @@ package edu.northeastern.numad23sp_team7;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -11,7 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +25,7 @@ import edu.northeastern.numad23sp_team7.service.YelpApiClient;
 public class AtYourServiceActivity extends AppCompatActivity {
 
     private static final String TAG = "WebServiceActivity";
+
 
 
     private Button searchButton;
@@ -53,6 +54,8 @@ public class AtYourServiceActivity extends AppCompatActivity {
         spinnerLocation = findViewById(R.id.spinner);
         locations.add("Seattle");
         locations.add("New York City");
+        locations.add("San francisco");
+        locations.add("Boston");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,locations);
         spinnerLocation.setAdapter(adapter);
 
@@ -64,6 +67,7 @@ public class AtYourServiceActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(rLayoutManager);
         restaurantAdapter = new RestaurantAdapter(restaurants, this);
         recyclerView.setAdapter(restaurantAdapter);
+        inputText = findViewById(R.id.search_plate);
 
 
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -72,10 +76,16 @@ public class AtYourServiceActivity extends AppCompatActivity {
                 Log.d(TAG, "term:" + searchTerm);
                 NetworkThread networkThread = new NetworkThread(searchTerm, location);
                 new Thread(networkThread).start();
+                String query = searchTerm.toLowerCase();
+                ArrayList<Restaurant> filteredList = new ArrayList<>();
+                for (Restaurant restaurantItem : restaurants) {
+                    if (restaurantItem.getName().toLowerCase().contains(query.toLowerCase())) {
+                        filteredList.add(restaurantItem);
+                    }
+                }
+                restaurantAdapter.setFilteredList(restaurants);
             }
         });
-
-
     }
 
 
@@ -95,23 +105,8 @@ public class AtYourServiceActivity extends AppCompatActivity {
 
             Log.d(TAG, "location:" + location);
             Log.d(TAG, "r size:" + restaurants.size());
-            EditText inputText = findViewById(R.id.search_plate);
-            inputText.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                }
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    filter(s.toString());
-                }
-            });
 
 
             runOnUiThread(new Runnable() {
@@ -122,17 +117,6 @@ public class AtYourServiceActivity extends AppCompatActivity {
                 }
             });
 
-        }
-
-
-    }
-    private void filter(String text) {
-        ArrayList<Restaurant> filteredList = new ArrayList<>();
-
-        for (Restaurant restaurantItem : restaurants) {
-            if (restaurantItem.getName().toLowerCase().contains(text.toLowerCase())) {
-                filteredList.add(restaurantItem);
-            }
         }
 
     }

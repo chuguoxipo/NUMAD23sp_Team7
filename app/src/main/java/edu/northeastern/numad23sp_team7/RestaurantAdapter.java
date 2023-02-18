@@ -24,7 +24,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantViewHolder
 
 
     private List<Restaurant> restaurantList;
+
     private Context context;
+
 
     public RestaurantAdapter(List<Restaurant> restaurantList, Context context) {
         this.restaurantList = restaurantList;
@@ -58,8 +60,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantViewHolder
     public void setRestaurantList(List<Restaurant> restaurants) {
         this.restaurantList = restaurants;
     }
-    public void  filterList(ArrayList<Restaurant> filteredList) {
-        restaurantList = filteredList;
+    public void setFilteredList(List<Restaurant> filteredList) {
+        this.restaurantList = filteredList;
         notifyDataSetChanged();
     }
 }
