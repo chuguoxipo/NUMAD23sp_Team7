@@ -81,8 +81,6 @@ public class AtYourServiceActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     performSearch();
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(inputText.getWindowToken(), 0);
                     return true;
                 }
 
@@ -115,6 +113,8 @@ public class AtYourServiceActivity extends AppCompatActivity {
     }
 
     private void performSearch() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(inputText.getWindowToken(), 0);
         String searchTerm = inputText.getText().toString();
         Log.d(TAG, "term:" + searchTerm);
         NetworkThread networkThread = new NetworkThread(searchTerm, location);
