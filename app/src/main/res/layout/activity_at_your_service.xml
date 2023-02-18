@@ -24,10 +24,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.044" />
 
+
     <EditText
         android:id="@+id/search_plate"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="169dp"
+        android:layout_height="47dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/search_bg"
         android:elevation="4dp"
@@ -38,30 +39,29 @@
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/title"
+        app:layout_constraintHorizontal_bias="0.141"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title"
-        app:layout_constraintVertical_bias="0"
+        app:layout_constraintVertical_bias="0.0"
         app:layout_constraintWidth_percent="0.5" />
-
 
     <Button
         android:id="@+id/search_button"
-        android:layout_width="35dp"
+        android:layout_width="32dp"
         android:layout_height="35dp"
         android:background="@drawable/button_selector"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="@+id/search_plate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.092"
+        app:layout_constraintHorizontal_bias="0.121"
         app:layout_constraintStart_toEndOf="@+id/search_plate"
         app:layout_constraintTop_toTopOf="@+id/search_plate"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.083" />
 
     <Spinner
         android:id="@+id/spinner"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="77dp"
+        android:layout_height="43dp"
         android:elevation="4dp"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="@+id/search_button"

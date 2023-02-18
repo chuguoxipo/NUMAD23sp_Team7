@@ -15,11 +15,13 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.northeastern.numad23sp_team7.model.Restaurant;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantViewHolder> {
+
 
     private List<Restaurant> restaurantList;
     private Context context;
@@ -55,5 +57,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantViewHolder
 
     public void setRestaurantList(List<Restaurant> restaurants) {
         this.restaurantList = restaurants;
+    }
+    public void  filterList(ArrayList<Restaurant> filteredList) {
+        restaurantList = filteredList;
+        notifyDataSetChanged();
     }
 }
