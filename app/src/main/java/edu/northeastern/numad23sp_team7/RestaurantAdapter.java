@@ -60,8 +60,5 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantViewHolder
     public void setRestaurantList(List<Restaurant> restaurants) {
         this.restaurantList = restaurants;
     }
-    public void setFilteredList(List<Restaurant> filteredList) {
-        this.restaurantList = filteredList;
-        notifyDataSetChanged();
-    }
+
 }
