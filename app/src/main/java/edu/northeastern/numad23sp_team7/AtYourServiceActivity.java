@@ -133,7 +133,6 @@ public class AtYourServiceActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            // change searchTerm and location to inputs from EditText and Spinner
             handler.post(() -> {
                 recyclerView.setVisibility(View.INVISIBLE);
                 progressBar.setVisibility(View.VISIBLE);
