@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Team7"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_a6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
