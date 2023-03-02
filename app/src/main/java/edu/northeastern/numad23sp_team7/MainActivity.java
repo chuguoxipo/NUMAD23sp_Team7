@@ -24,10 +24,23 @@ public class MainActivity extends AppCompatActivity {
                 goToA6Activity();
             }
         });
+
+        btnA7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToA7Activity();
+            }
+        });
+
     }
 
     public void goToA6Activity(){
         Intent intent = new Intent(this, AtYourServiceActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToA7Activity(){
+        Intent intent = new Intent(this, SendStickerActivity.class);
         startActivity(intent);
     }
 }
