@@ -27,12 +27,12 @@ public class User {
     }
 
     public ArrayList<History> getSentRecords() {
-        return sentRecords;
+        return sentRecords == null ? new ArrayList<>() : sentRecords;
     }
 
 
     public ArrayList<History> getReceivedRecords() {
-        return receivedRecords;
+        return receivedRecords == null ? new ArrayList<>() : receivedRecords;
     }
 
     @Exclude

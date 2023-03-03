@@ -128,10 +128,13 @@ public class SendStickerActivity extends AppCompatActivity {
                 if (receiverUsername == null || currentClickedSticker == null) {
                     Toast.makeText(getApplicationContext(), "Please choose a receiver and a sticker", Toast.LENGTH_LONG).show();
                 } else {
+                    Log.d("收到者", receiverUsername);
                     int stickerId = currentClickedSticker.getId();
                     // update database
-                    updateSenderHistory(mDatabase, stickerId, "user4", receiverUsername);
                     updateReceiverHistory(mDatabase, stickerId, "user4", receiverUsername);
+                    updateSenderHistory(mDatabase, stickerId, "user4", receiverUsername);
+                    Log.d("完成发送", "aaaa");
+                    Log.d("完成接收", "bbbb");
                 }
             }
         });
@@ -184,6 +187,7 @@ public class SendStickerActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "DBError: " + databaseError, Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     private void updateReceiverHistory(
@@ -206,9 +210,10 @@ public class SendStickerActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onComplete(DatabaseError databaseError,
-                                   boolean b,
-                                   DataSnapshot dataSnapshot) {
+            public void onComplete(
+                    DatabaseError databaseError,
+                    boolean b,
+                    DataSnapshot dataSnapshot) {
                 Log.d(TAG, "postTransaction:onComplete:" + databaseError);
                 Toast.makeText(getApplicationContext(), "DBError: " + databaseError, Toast.LENGTH_SHORT).show();
             }
