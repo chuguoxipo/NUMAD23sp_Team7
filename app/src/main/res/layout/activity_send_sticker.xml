@@ -62,6 +62,7 @@
 
         android:prompt="@string/please_select_a_receiver"
         android:spinnerMode="dialog"
+        android:textAlignment="center"
 
         app:layout_constraintBottom_toBottomOf="@+id/select_receiver"
         app:layout_constraintEnd_toEndOf="parent"
