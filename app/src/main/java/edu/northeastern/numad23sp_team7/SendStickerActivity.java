@@ -18,22 +18,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Queue;
 
 import edu.northeastern.numad23sp_team7.model.History;
 import edu.northeastern.numad23sp_team7.model.User;
@@ -72,9 +65,9 @@ public class SendStickerActivity extends AppCompatActivity {
         // Connect with firebase
         mDatabase = FirebaseDatabase.getInstance().getReference(User.class.getSimpleName());
 
-        // todo
-        // from database, get all usernames except the current user
-        receiverList.add("user2");
+        // TODO
+        // get all usernames except the current user from database
+        receiverList.add("user2"); // change
 
         selectReceiverSpinner = findViewById(R.id.spinner_receiver);
         spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, receiverList);
@@ -128,13 +121,14 @@ public class SendStickerActivity extends AppCompatActivity {
                 if (receiverUsername == null || currentClickedSticker == null) {
                     Toast.makeText(getApplicationContext(), "Please choose a receiver and a sticker", Toast.LENGTH_LONG).show();
                 } else {
-                    Log.d("收到者", receiverUsername);
                     int stickerId = currentClickedSticker.getId();
                     // update database
+                    // TODO
+                    // change senderUsername to the current signedIn user's username
                     updateReceiverHistory(mDatabase, stickerId, "user4", receiverUsername);
                     updateSenderHistory(mDatabase, stickerId, "user4", receiverUsername);
-                    Log.d("完成发送", "aaaa");
-                    Log.d("完成接收", "bbbb");
+                    Log.d(TAG, "sent");
+                    Toast.makeText(getApplicationContext(), "Sticker Sent", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -142,23 +136,7 @@ public class SendStickerActivity extends AppCompatActivity {
 
     }
 
-    // add Sent History to sender's sent sentRecords
-    public void addSentHistoryToDB(DatabaseReference mDatabase, int stickerId, String senderUsername, String receiverUsername) {
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<History> sentRecords = (ArrayList<History>) snapshot.getValue();
-                sentRecords.add(new History(stickerId, receiverUsername));
-                mDatabase.setValue(sentRecords);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
+    // add Sent History to sender's sentRecords
     private void updateSenderHistory(
             DatabaseReference mDatabase,
             int stickerId,
@@ -184,12 +162,12 @@ public class SendStickerActivity extends AppCompatActivity {
                     boolean b,
                     DataSnapshot dataSnapshot) {
                 Log.d(TAG, "postTransaction:onComplete:" + databaseError);
-                Toast.makeText(getApplicationContext(), "DBError: " + databaseError, Toast.LENGTH_SHORT).show();
             }
         });
 
     }
 
+    // update Received History to receiver's receivedRecords
     private void updateReceiverHistory(
             DatabaseReference mDatabase,
             int stickerId,
@@ -215,7 +193,6 @@ public class SendStickerActivity extends AppCompatActivity {
                     boolean b,
                     DataSnapshot dataSnapshot) {
                 Log.d(TAG, "postTransaction:onComplete:" + databaseError);
-                Toast.makeText(getApplicationContext(), "DBError: " + databaseError, Toast.LENGTH_SHORT).show();
             }
         });
     }
