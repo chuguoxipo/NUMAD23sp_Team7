@@ -65,9 +65,19 @@ public class SendStickerActivity extends AppCompatActivity {
         // Connect with firebase
         mDatabase = FirebaseDatabase.getInstance().getReference(User.class.getSimpleName());
 
+
         // TODO
-        // get all usernames except the current user from database
-        receiverList.add("user2"); // change
+        // change username as the current username
+        usernameText = findViewById(R.id.username);
+
+        // TODO
+        // get all usernames except for the current user from database
+        // change the following adds codes
+        receiverList.add("user1");
+        receiverList.add("user2");
+        receiverList.add("user3");
+
+
 
         selectReceiverSpinner = findViewById(R.id.spinner_receiver);
         spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, receiverList);

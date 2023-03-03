@@ -57,7 +57,7 @@
 
     <Spinner
         android:id="@+id/spinner_receiver"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
 
         android:prompt="@string/please_select_a_receiver"
