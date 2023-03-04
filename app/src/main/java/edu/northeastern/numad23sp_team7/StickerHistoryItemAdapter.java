@@ -38,6 +38,7 @@ public class StickerHistoryItemAdapter extends RecyclerView.Adapter<StickerHisto
 
     @Override
     public void onBindViewHolder(@NonNull RecordViewHolder holder, int position) {
+        position = records.size() - 1 - position;
         int resourceId = context.getResources().getIdentifier(records.get(position).getStickerId(), "drawable", context.getPackageName());
         holder.image.setImageResource(resourceId);
         holder.textFlag.setText(sendOrReceiveFlag.equals(SendStickerActivity.HISTORY_SEND_VALUE) ? SEND_HINT : RECEIVE_HINT);
