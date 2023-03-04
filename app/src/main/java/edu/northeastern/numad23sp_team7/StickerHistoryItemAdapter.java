@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import edu.northeastern.numad23sp_team7.model.History;
 

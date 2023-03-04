@@ -1,15 +1,16 @@
 package edu.northeastern.numad23sp_team7;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,7 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,18 +32,16 @@ public class StickerHistoryActivity extends AppCompatActivity {
     private StickerHistoryCategoryAdapter categoryAdapter;
 
     private RecyclerView recyclerViewRecord;
-    private ArrayList<Integer> images = new ArrayList<>();
-    private ArrayList<String> flags = new ArrayList<>();
-    private ArrayList<String> users = new ArrayList<>();
-    private ArrayList<String> times = new ArrayList<>();
     private StickerHistoryItemAdapter itemAdapter;
 
     private String loggedInUser;
     private String sendOrReceiveFlag;
     private ArrayList<History> records = new ArrayList<>();
     private static final String LOG_KEY = "Sticker history activity";
+    private static final String TITLE_SEND = "Send History";
+    private static final String TITLE_RECEIVE = "Receive History";
     private Map<String, Integer> counter = new HashMap<>();
-    private final String[] categoriesArr = {"Food", "Drink"};
+    private TextView textTitle;
 
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
     private DatabaseReference ref;
@@ -62,8 +62,22 @@ public class StickerHistoryActivity extends AppCompatActivity {
             sendOrReceiveFlag = savedInstanceState.getString(SendStickerActivity.HISTORY_SEND_OR_RECEIVE_FLAG);
         }
 
+        // Set title
+        String title = sendOrReceiveFlag.equals(SendStickerActivity.HISTORY_SEND_VALUE) ? TITLE_SEND : TITLE_RECEIVE;
+        textTitle = findViewById(R.id.textViewStickerHistoryTitle);
+        textTitle.setText(title);
+
+        // Set up recycler view
         recyclerViewCategory = findViewById(R.id.recyclerViewStickerHistoryCategories);
         recyclerViewCategory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewRecord = findViewById(R.id.recyclerViewStickerHistoryItem);
+        recyclerViewRecord.setLayoutManager(new LinearLayoutManager(StickerHistoryActivity.this) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        recyclerViewRecord.addItemDecoration(new DividerItemDecoration(StickerHistoryActivity.this, LinearLayoutManager.VERTICAL));
 
         // Get history records from firebase
         ref = db.getReference().child(User.class.getSimpleName()).child(loggedInUser);
@@ -79,7 +93,7 @@ public class StickerHistoryActivity extends AppCompatActivity {
                     }
                 }
 
-                // Category recycler view
+                // Update category recyclerview
                 for (History record: records) {
                     counter.put(record.getCategory(), counter.getOrDefault(record.getCategory(), 0) + 1);
                 }
@@ -94,15 +108,6 @@ public class StickerHistoryActivity extends AppCompatActivity {
                 recyclerViewCategory.setAdapter(categoryAdapter);
 
                 // Record history recycler view
-                recyclerViewRecord = findViewById(R.id.recyclerViewStickerHistoryItem);
-                recyclerViewRecord.setLayoutManager(new LinearLayoutManager(StickerHistoryActivity.this) {
-                    @Override
-                    public boolean canScrollVertically() {
-                        return false;
-                    }
-                });
-                recyclerViewRecord.addItemDecoration(new DividerItemDecoration(StickerHistoryActivity.this, LinearLayoutManager.VERTICAL));
-
                 itemAdapter = new StickerHistoryItemAdapter(records, sendOrReceiveFlag, StickerHistoryActivity.this);
                 recyclerViewRecord.setAdapter(itemAdapter);
             }

@@ -134,7 +134,7 @@ public class SendStickerActivity extends AppCompatActivity {
         imageIdToFilenameMap.put(sticker1.getId(), "sticker1");
         imageIdToFilenameMap.put(sticker2.getId(), "sticker2");
         imageIdToFilenameMap.put(sticker3.getId(), "sticker3");
-        imageIdToFilenameMap.put(sticker4.getId(), "ssticker4");
+        imageIdToFilenameMap.put(sticker4.getId(), "sticker4");
 
         for (int i = 0; i < 4; i++) {
             stickerList.get(i).setOnClickListener(new View.OnClickListener() {
@@ -149,11 +149,6 @@ public class SendStickerActivity extends AppCompatActivity {
                 }
             });
         }
-
-        imageIdToFilenameMap.put(sticker1.getId(), "sticker1");
-        imageIdToFilenameMap.put(sticker2.getId(), "sticker2");
-        imageIdToFilenameMap.put(sticker3.getId(), "sticker3");
-        imageIdToFilenameMap.put(sticker4.getId(), "sticker4");
 
         sendButton = findViewById(R.id.send_sticker);
         sendButton.setOnClickListener(new View.OnClickListener() {
