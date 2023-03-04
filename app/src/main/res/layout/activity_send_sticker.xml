@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SendStickerActivity">
+
+    <TextView
+        android:id="@+id/hello"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="3dp"
+        android:text="Hello"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.125"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.044" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="3dp"
+        android:text="username"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toEndOf="@+id/hello"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.044" />
+
+    <TextView
+        android:id="@+id/select_receiver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="@string/please_select_a_receiver"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/hello"
+        app:layout_constraintTop_toBottomOf="@+id/hello"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <Spinner
+        android:id="@+id/spinner_receiver"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+
+        android:prompt="@string/please_select_a_receiver"
+        android:spinnerMode="dialog"
+        android:textAlignment="center"
+
+        app:layout_constraintBottom_toBottomOf="@+id/select_receiver"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.16"
+        app:layout_constraintStart_toEndOf="@+id/select_receiver"
+        app:layout_constraintTop_toTopOf="@+id/select_receiver"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/select_sticker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please select a sticker:"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/select_receiver"
+        app:layout_constraintTop_toBottomOf="@+id/select_receiver"
+        app:layout_constraintVertical_bias="0.076" />
+
+    <ImageView
+        android:id="@+id/sticker1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/sticker1"
+        android:clickable="true"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/select_sticker"
+        app:layout_constraintTop_toBottomOf="@+id/select_sticker"
+        app:layout_constraintVertical_bias="0.15" />
+
+    <ImageView
+        android:id="@+id/sticker2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/sticker2"
+        android:clickable="true"
+
+        app:layout_constraintBottom_toBottomOf="@+id/sticker1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.168"
+        app:layout_constraintStart_toEndOf="@+id/sticker1"
+        app:layout_constraintTop_toTopOf="@+id/sticker1"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/sticker4"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/sticker4"
+        android:clickable="true"
+
+
+        app:layout_constraintBottom_toBottomOf="@+id/sticker3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.35"
+        app:layout_constraintStart_toEndOf="@+id/sticker3"
+        app:layout_constraintTop_toTopOf="@+id/sticker3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/sticker3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/sticker3"
+        android:clickable="true"
+
+        app:layout_constraintBottom_toBottomOf="@+id/sticker2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.217"
+        app:layout_constraintStart_toEndOf="@+id/sticker2"
+        app:layout_constraintTop_toTopOf="@+id/sticker2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/send_sticker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SEND"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sticker2"
+        app:layout_constraintVertical_bias="0.232" />
+
+    <Button
+        android:id="@+id/buttonStickerSendHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send History"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.209"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/send_sticker"
+        app:layout_constraintVertical_bias="0.19" />
+
+    <Button
+        android:id="@+id/buttonStickerReceiveHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Received History"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.671"
+        app:layout_constraintStart_toEndOf="@+id/buttonStickerSendHistory"
+        app:layout_constraintTop_toTopOf="@+id/buttonStickerSendHistory"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textViewStickerCategory1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@id/sticker1"
+        app:layout_constraintEnd_toEndOf="@id/sticker1"
+        app:layout_constraintTop_toBottomOf="@id/sticker1" />
+
+    <TextView
+        android:id="@+id/textViewStickerCategory2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="@id/sticker2"
+        app:layout_constraintEnd_toEndOf="@id/sticker2"
+        app:layout_constraintTop_toBottomOf="@id/sticker2"
+        tools:layout_editor_absoluteY="333dp" />
+
+    <TextView
+        android:id="@+id/textViewStickerCategory3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="@id/sticker3"
+        app:layout_constraintEnd_toEndOf="@id/sticker3"
+        app:layout_constraintTop_toBottomOf="@id/sticker3"
+        tools:layout_editor_absoluteY="333dp" />
+
+    <TextView
+        android:id="@+id/textViewStickerCategory4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="@id/sticker4"
+        app:layout_constraintEnd_toEndOf="@id/sticker4"
+        app:layout_constraintTop_toBottomOf="@id/sticker4"
+        tools:layout_editor_absoluteY="333dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
