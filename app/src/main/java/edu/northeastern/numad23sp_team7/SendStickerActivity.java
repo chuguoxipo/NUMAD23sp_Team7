@@ -129,15 +129,15 @@ public class SendStickerActivity extends AppCompatActivity {
         textCategory2 = findViewById(R.id.textViewStickerCategory2);
         textCategory3 = findViewById(R.id.textViewStickerCategory3);
         textCategory4 = findViewById(R.id.textViewStickerCategory4);
-        textCategory1.setText(categoryMap.get(R.id.sticker1));
-        textCategory2.setText(categoryMap.get(R.id.sticker2));
-        textCategory3.setText(categoryMap.get(R.id.sticker3));
-        textCategory4.setText(categoryMap.get(R.id.sticker4));
 
         imageIdToFilenameMap.put(sticker1.getId(), "sticker1");
         imageIdToFilenameMap.put(sticker2.getId(), "sticker2");
         imageIdToFilenameMap.put(sticker3.getId(), "sticker3");
         imageIdToFilenameMap.put(sticker4.getId(), "sticker4");
+        textCategory1.setText(categoryMap.get("sticker1"));
+        textCategory2.setText(categoryMap.get("sticker2"));
+        textCategory3.setText(categoryMap.get("sticker3"));
+        textCategory4.setText(categoryMap.get("sticker4"));
 
         for (int i = 0; i < 4; i++) {
             stickerList.get(i).setOnClickListener(new View.OnClickListener() {
