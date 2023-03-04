@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -72,6 +73,7 @@ public class SendStickerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_sticker);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
         // Connect with firebase
         mDatabase = FirebaseDatabase.getInstance().getReference(User.class.getSimpleName());
@@ -80,6 +82,7 @@ public class SendStickerActivity extends AppCompatActivity {
         // TODO
         // change username as the current username
         usernameText = findViewById(R.id.username);
+        usernameText.setText(loggedInUsername);
 
         // TODO
         // get all usernames except for the current user from database

@@ -20,6 +20,8 @@ public class StickerHistoryItemAdapter extends RecyclerView.Adapter<StickerHisto
     private ArrayList<History> records;
     private Context context;
     private String sendOrReceiveFlag;
+    private static final String SEND_HINT = "To:";
+    private static final String RECEIVE_HINT = "From:";
 
     public StickerHistoryItemAdapter(ArrayList<History> records, String sendOrReceiveFlag, Context context) {
         this.records = records;
@@ -38,7 +40,7 @@ public class StickerHistoryItemAdapter extends RecyclerView.Adapter<StickerHisto
     public void onBindViewHolder(@NonNull RecordViewHolder holder, int position) {
         int resourceId = context.getResources().getIdentifier(records.get(position).getStickerId(), "drawable", context.getPackageName());
         holder.image.setImageResource(resourceId);
-        holder.textFlag.setText(sendOrReceiveFlag);
+        holder.textFlag.setText(sendOrReceiveFlag.equals(SendStickerActivity.HISTORY_SEND_VALUE) ? SEND_HINT : RECEIVE_HINT);
         holder.textUsername.setText(records.get(position).getUsername());
         holder.textTime.setText(this.getFormattedTime(records.get(position).getTimestamp()));
     }
