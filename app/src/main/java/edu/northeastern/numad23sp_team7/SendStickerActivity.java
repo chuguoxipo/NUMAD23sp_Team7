@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,12 +17,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
+import com.google.firebase.database.ValueEventListener;
+
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -69,11 +75,13 @@ public class SendStickerActivity extends AppCompatActivity {
     private Map<Integer, String> imageIdToFilenameMap = new HashMap<>();
     private String loggedInUsername = "user1";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_sticker);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+
 
         // Connect with firebase
         mDatabase = FirebaseDatabase.getInstance().getReference(User.class.getSimpleName());
@@ -81,15 +89,42 @@ public class SendStickerActivity extends AppCompatActivity {
 
         // TODO
         // change username as the current username
-        usernameText = findViewById(R.id.username);
-        usernameText.setText(loggedInUsername);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            loggedInUsername = currentUser.getDisplayName();
+            usernameText = findViewById(R.id.username);
+            usernameText.setText(loggedInUsername);
+        }
+
+
 
         // TODO
         // get all usernames except for the current user from database
         // change the following adds codes
-        receiverList.add("user1");
-        receiverList.add("user2");
-        receiverList.add("user3");
+//        receiverList.add("user1");
+//        receiverList.add("user2");
+//        receiverList.add("user3");
+        FirebaseDatabase.getInstance().getReference("users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                // Loop through all users in the dataSnapshot
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    User user = userSnapshot.getValue(User.class);
+
+                    // Add the username to the list, if it is not the current loggedin user's username
+                    if (!user.getUsername().equals(loggedInUsername)) {
+                        receiverList.add(user.getUsername());
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle errors here
+            }
+        });
+
 
         selectReceiverSpinner = findViewById(R.id.spinner_receiver);
         spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, receiverList);
@@ -168,6 +203,8 @@ public class SendStickerActivity extends AppCompatActivity {
                     // update database
                     // TODO
                     // change senderUsername to the current signedIn user's username
+                    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                    String loggedInUsername = firebaseAuth.getCurrentUser().getDisplayName();
                     updateReceiverHistory(mDatabase, imageFilename, loggedInUsername, receiverUsername);
                     updateSenderHistory(mDatabase, imageFilename, loggedInUsername, receiverUsername);
                     Log.d(TAG, "sent");
