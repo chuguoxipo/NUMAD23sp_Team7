@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import edu.northeastern.numad23sp_team7.FireBaseModel.LogInActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         btnA7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToA7Activity();
+                goToA8Activity();
             }
         });
 
@@ -39,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToA7Activity(){
-        Intent intent = new Intent(this, SendStickerActivity.class);
+    public void goToA8Activity(){
+        Intent intent = new Intent(this, LogInActivity.class);
         startActivity(intent);
     }
 }
