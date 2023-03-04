@@ -1,10 +1,18 @@
 package edu.northeastern.numad23sp_team7;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -20,6 +28,7 @@ import android.widget.Toast;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -75,10 +84,14 @@ public class SendStickerActivity extends AppCompatActivity {
     private Map<Integer, String> imageIdToFilenameMap = new HashMap<>();
     private String loggedInUsername = "user1";
 
+    private final int NOTIFICATION_UNIQUE_ID = 7;
+    private static int notificationGeneration = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        createNotificationChannel();
         setContentView(R.layout.activity_send_sticker);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
@@ -209,6 +222,31 @@ public class SendStickerActivity extends AppCompatActivity {
                     updateSenderHistory(mDatabase, imageFilename, loggedInUsername, receiverUsername);
                     Log.d(TAG, "sent");
                     Toast.makeText(getApplicationContext(), "Sticker Sent", Toast.LENGTH_LONG).show();
+
+                    DatabaseReference currentUserRef = mDatabase.child(loggedInUsername).child("receivedRecords");
+                    currentUserRef.addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                            History history = snapshot.getValue(History.class);
+                            sendNotification(v, history);
+                        }
+                        @Override
+                        public void onChildChanged(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                            Log.d("Firebase", "Child changed: " + snapshot.getKey());
+                        }
+                        @Override
+                        public void onChildRemoved(@androidx.annotation.NonNull DataSnapshot snapshot) {
+                            Log.d("Firebase", "Child removed: " + snapshot.getKey());
+                        }
+                        @Override
+                        public void onChildMoved(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                            Log.d("Firebase", "Child moved: " + snapshot.getKey());
+                        }
+                        @Override
+                        public void onCancelled(@androidx.annotation.NonNull DatabaseError error) {
+                            Log.e("Firebase", "Error listening for changes: " + error.getMessage());
+                        }
+                    });
                 }
             }
         });
@@ -230,6 +268,49 @@ public class SendStickerActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("send_sticker_channel_id", name, importance);
+            channel.setDescription(description);
+            channel.enableLights(true);
+            channel.setLockscreenVisibility(android.R.color.holo_green_light);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    public void sendNotification(View view, History history) {
+        Intent intent = new Intent(this, ReceiveStickerActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent moreIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, PendingIntent.FLAG_IMMUTABLE);
+        String channelId = getString(R.string.channel_id);
+        ImageView receivedSticker = (ImageView) findViewById(Integer.parseInt(history.getStickerId()));
+        if (receivedSticker != null) {
+            receivedSticker.buildDrawingCache();
+            Notification noti = new NotificationCompat.Builder(this, channelId)
+                    .setSmallIcon(R.drawable.ic_launcher_yelp_foreground)
+                    .setLargeIcon(currentClickedSticker.getDrawingCache())
+
+                    .setContentTitle(history.getUsername())
+                    .setContentText("You just received a sticker from " + history.getUsername() + " !")
+
+                    .addAction(R.drawable.search, "More", moreIntent)
+                    .setContentIntent(moreIntent)
+                    .setAutoCancel(true)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .build();
+            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            notificationManager.notify(NOTIFICATION_UNIQUE_ID + notificationGeneration, noti);
+        } else {
+            Log.e("Sticker receiving error", "Users have different versions of the app");
+        }
+    }
+
+
 
     // add Sent History to sender's sentRecords
     private void updateSenderHistory(
