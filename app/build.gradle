@@ -52,4 +52,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-database'
     implementation 'androidx.core:core:1.6.0'
+    implementation 'com.google.firebase:firebase-auth'
 }
