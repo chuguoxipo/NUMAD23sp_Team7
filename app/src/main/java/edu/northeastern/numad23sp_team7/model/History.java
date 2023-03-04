@@ -6,17 +6,19 @@ import java.util.Date;
 
 public class History {
 
-    private int stickerId;
+    private String stickerId;
     private String username;
     private long timestamp;
+    private String category;
 
     public History() {
     }
 
-    public History(int stickerId, String username) {
+    public History(String stickerId, String username, String category) {
         this.stickerId = stickerId;
         this.username = username;
         this.timestamp = System.currentTimeMillis();
+        this.category = category;
     }
 
 
@@ -36,7 +38,25 @@ public class History {
         return username;
     }
 
-    public int getStickerId() {
+    public String getStickerId() {
         return stickerId;
+    }
+
+    public String getCategory() { return category; }
+
+    public void setStickerId(String stickerId) {
+        this.stickerId = stickerId;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

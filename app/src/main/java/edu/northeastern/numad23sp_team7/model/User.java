@@ -19,6 +19,8 @@ public class User {
     }
 
     public User() {
+        this.sentRecords = new ArrayList<>();
+        this.receivedRecords = new ArrayList<>();
     }
 
 
@@ -43,6 +45,18 @@ public class User {
         result.put("receivedRecords", receivedRecords);
 
         return result;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setSentRecords(ArrayList<History> sentRecords) {
+        this.sentRecords = sentRecords;
+    }
+
+    public void setReceivedRecords(ArrayList<History> receivedRecords) {
+        this.receivedRecords = receivedRecords;
     }
 }
 

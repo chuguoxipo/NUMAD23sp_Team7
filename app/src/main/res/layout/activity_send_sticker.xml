@@ -154,7 +154,7 @@
         app:layout_constraintVertical_bias="0.232" />
 
     <Button
-        android:id="@+id/sent_history"
+        android:id="@+id/buttonStickerSendHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Send History"
@@ -167,7 +167,7 @@
         app:layout_constraintVertical_bias="0.19" />
 
     <Button
-        android:id="@+id/received_history"
+        android:id="@+id/buttonStickerReceiveHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Received History"
@@ -175,9 +175,52 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.671"
-        app:layout_constraintStart_toEndOf="@+id/sent_history"
-        app:layout_constraintTop_toTopOf="@+id/sent_history"
+        app:layout_constraintStart_toEndOf="@+id/buttonStickerSendHistory"
+        app:layout_constraintTop_toTopOf="@+id/buttonStickerSendHistory"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textViewStickerCategory1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@id/sticker1"
+        app:layout_constraintEnd_toEndOf="@id/sticker1"
+        app:layout_constraintTop_toBottomOf="@id/sticker1" />
+
+    <TextView
+        android:id="@+id/textViewStickerCategory2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="@id/sticker2"
+        app:layout_constraintEnd_toEndOf="@id/sticker2"
+        app:layout_constraintTop_toBottomOf="@id/sticker2"
+        tools:layout_editor_absoluteY="333dp" />
+
+    <TextView
+        android:id="@+id/textViewStickerCategory3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="@id/sticker3"
+        app:layout_constraintEnd_toEndOf="@id/sticker3"
+        app:layout_constraintTop_toBottomOf="@id/sticker3"
+        tools:layout_editor_absoluteY="333dp" />
+
+    <TextView
+        android:id="@+id/textViewStickerCategory4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="@id/sticker4"
+        app:layout_constraintEnd_toEndOf="@id/sticker4"
+        app:layout_constraintTop_toBottomOf="@id/sticker4"
+        tools:layout_editor_absoluteY="333dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
