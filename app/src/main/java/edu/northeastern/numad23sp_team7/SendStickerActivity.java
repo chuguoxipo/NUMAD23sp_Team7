@@ -1,11 +1,8 @@
 package edu.northeastern.numad23sp_team7;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,8 +22,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.northeastern.numad23sp_team7.model.History;
 import edu.northeastern.numad23sp_team7.model.User;
@@ -34,7 +34,11 @@ import edu.northeastern.numad23sp_team7.model.User;
 public class SendStickerActivity extends AppCompatActivity {
 
     private static final String TAG = "SendStickerActivity";
-
+    static final String HISTORY_USERNAME_KEY = "logged-in-user";
+    static final String HISTORY_SEND_OR_RECEIVE_FLAG = "send-or-receive";
+    static final String HISTORY_SEND_VALUE = "send";
+    static final String HISTORY_RECEIVE_VALUE = "receive";
+    static final String HISTORY_IMAGE_MAP_KEY = "image-map";
 
     private DatabaseReference mDatabase;
     private TextView usernameText;
@@ -51,11 +55,18 @@ public class SendStickerActivity extends AppCompatActivity {
     private ArrayAdapter<String> spinnerAdapter;
     private String receiverUsername;
 
-
     private Button sendButton;
     private Button sendHistoryButton;
     private Button receiveHistoryButton;
 
+    private TextView textCategory1;
+    private TextView textCategory2;
+    private TextView textCategory3;
+    private TextView textCategory4;
+
+    private Map<String, String> categoryMap;
+    private Map<Integer, String> imageIdToFilenameMap = new HashMap<>();
+    private String loggedInUsername = "user1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +88,6 @@ public class SendStickerActivity extends AppCompatActivity {
         receiverList.add("user2");
         receiverList.add("user3");
 
-
-
         selectReceiverSpinner = findViewById(R.id.spinner_receiver);
         spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, receiverList);
         selectReceiverSpinner.setAdapter(spinnerAdapter);
@@ -97,7 +106,6 @@ public class SendStickerActivity extends AppCompatActivity {
             }
         });
 
-
         sticker1 = findViewById(R.id.sticker1);
         sticker2 = findViewById(R.id.sticker2);
         sticker3 = findViewById(R.id.sticker3);
@@ -107,6 +115,26 @@ public class SendStickerActivity extends AppCompatActivity {
         stickerList.add(sticker2);
         stickerList.add(sticker3);
         stickerList.add(sticker4);
+
+        categoryMap = new HashMap<>();
+        categoryMap.put("sticker1", "Food");
+        categoryMap.put("sticker2", "Food");
+        categoryMap.put("sticker3", "Drink");
+        categoryMap.put("sticker4", "Food");
+
+        textCategory1 = findViewById(R.id.textViewStickerCategory1);
+        textCategory2 = findViewById(R.id.textViewStickerCategory2);
+        textCategory3 = findViewById(R.id.textViewStickerCategory3);
+        textCategory4 = findViewById(R.id.textViewStickerCategory4);
+        textCategory1.setText(categoryMap.get(R.id.sticker1));
+        textCategory2.setText(categoryMap.get(R.id.sticker2));
+        textCategory3.setText(categoryMap.get(R.id.sticker3));
+        textCategory4.setText(categoryMap.get(R.id.sticker4));
+
+        imageIdToFilenameMap.put(sticker1.getId(), "sticker1");
+        imageIdToFilenameMap.put(sticker2.getId(), "sticker2");
+        imageIdToFilenameMap.put(sticker3.getId(), "sticker3");
+        imageIdToFilenameMap.put(sticker4.getId(), "ssticker4");
 
         for (int i = 0; i < 4; i++) {
             stickerList.get(i).setOnClickListener(new View.OnClickListener() {
@@ -122,6 +150,11 @@ public class SendStickerActivity extends AppCompatActivity {
             });
         }
 
+        imageIdToFilenameMap.put(sticker1.getId(), "sticker1");
+        imageIdToFilenameMap.put(sticker2.getId(), "sticker2");
+        imageIdToFilenameMap.put(sticker3.getId(), "sticker3");
+        imageIdToFilenameMap.put(sticker4.getId(), "sticker4");
+
         sendButton = findViewById(R.id.send_sticker);
         sendButton.setOnClickListener(new View.OnClickListener() {
             // send button
@@ -132,24 +165,41 @@ public class SendStickerActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please choose a receiver and a sticker", Toast.LENGTH_LONG).show();
                 } else {
                     int stickerId = currentClickedSticker.getId();
+                    String imageFilename = imageIdToFilenameMap.get(stickerId);
+
                     // update database
                     // TODO
                     // change senderUsername to the current signedIn user's username
-                    updateReceiverHistory(mDatabase, stickerId, "user4", receiverUsername);
-                    updateSenderHistory(mDatabase, stickerId, "user4", receiverUsername);
+                    updateReceiverHistory(mDatabase, imageFilename, loggedInUsername, receiverUsername);
+                    updateSenderHistory(mDatabase, imageFilename, loggedInUsername, receiverUsername);
                     Log.d(TAG, "sent");
                     Toast.makeText(getApplicationContext(), "Sticker Sent", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
+        sendHistoryButton = findViewById(R.id.buttonStickerSendHistory);
+        sendHistoryButton.setOnClickListener(view -> {
+            Intent intent = new Intent(this, StickerHistoryActivity.class);
+            intent.putExtra(HISTORY_USERNAME_KEY, loggedInUsername);
+            intent.putExtra(HISTORY_SEND_OR_RECEIVE_FLAG, HISTORY_SEND_VALUE);
+            intent.putExtra(HISTORY_IMAGE_MAP_KEY, (Serializable) imageIdToFilenameMap);
+            startActivity(intent);
+        });
 
+        receiveHistoryButton = findViewById(R.id.buttonStickerReceiveHistory);
+        receiveHistoryButton.setOnClickListener(view -> {
+            Intent intent = new Intent(this, StickerHistoryActivity.class);
+            intent.putExtra(HISTORY_USERNAME_KEY, loggedInUsername);
+            intent.putExtra(HISTORY_SEND_OR_RECEIVE_FLAG, HISTORY_RECEIVE_VALUE);
+            startActivity(intent);
+        });
     }
 
     // add Sent History to sender's sentRecords
     private void updateSenderHistory(
             DatabaseReference mDatabase,
-            int stickerId,
+            String stickerId,
             String senderUsername,
             String receiverUsername) {
         mDatabase.child(senderUsername).runTransaction(new Transaction.Handler() {
@@ -161,7 +211,7 @@ public class SendStickerActivity extends AppCompatActivity {
                     user = new User(senderUsername);
                 }
 
-                user.getSentRecords().add(new History(stickerId, receiverUsername));
+                user.getSentRecords().add(new History(stickerId, receiverUsername, categoryMap.get(stickerId)));
                 mutableData.setValue(user);
                 return Transaction.success(mutableData);
             }
@@ -180,7 +230,7 @@ public class SendStickerActivity extends AppCompatActivity {
     // update Received History to receiver's receivedRecords
     private void updateReceiverHistory(
             DatabaseReference mDatabase,
-            int stickerId,
+            String stickerId,
             String senderUsername,
             String receiverUsername) {
         mDatabase.child(receiverUsername).runTransaction(new Transaction.Handler() {
@@ -192,7 +242,7 @@ public class SendStickerActivity extends AppCompatActivity {
                     user = new User(receiverUsername);
                 }
 
-                user.getReceivedRecords().add(new History(stickerId, senderUsername));
+                user.getReceivedRecords().add(new History(stickerId, senderUsername, categoryMap.get(stickerId)));
                 mutableData.setValue(user);
                 return Transaction.success(mutableData);
             }
@@ -206,5 +256,4 @@ public class SendStickerActivity extends AppCompatActivity {
             }
         });
     }
-
 }
