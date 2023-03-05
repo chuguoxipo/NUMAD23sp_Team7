@@ -46,8 +46,6 @@ public class SendStickerActivity extends AppCompatActivity {
 
     private static final String TAG = "SendStickerActivity";
     static final String HISTORY_USERNAME_KEY = "logged-in-user";
-    static final String HISTORY_SELECTED_RECEIVER_NAME = "selected-receiver";
-    static final String HISTORY_SELECTED_STICKER = "selected-sticker";
     static final String HISTORY_SEND_OR_RECEIVE_FLAG = "send-or-receive";
     static final String HISTORY_SEND_VALUE = "send";
     static final String HISTORY_RECEIVE_VALUE = "receive";
@@ -62,7 +60,6 @@ public class SendStickerActivity extends AppCompatActivity {
     private ImageView sticker4;
     private ImageView currentClickedSticker = null;
     private List<ImageView> stickerList = new ArrayList<>();
-    private int selectedStickerResourceId;
 
     private Spinner selectReceiverSpinner;
     private List<String> receiverList = new ArrayList<>();
