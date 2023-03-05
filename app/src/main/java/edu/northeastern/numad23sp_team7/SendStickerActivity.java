@@ -268,7 +268,8 @@ public class SendStickerActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent moreIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, PendingIntent.FLAG_IMMUTABLE);
         String channelId = getString(R.string.channel_id);
-        ImageView receivedSticker = (ImageView) findViewById(Integer.parseInt(history.getStickerId()));
+        Integer receivedStickerId = getStickerIdFromMap(history.getStickerId());
+        ImageView receivedSticker = (ImageView) findViewById(receivedStickerId);
         if (receivedSticker != null) {
             receivedSticker.buildDrawingCache();
             Notification noti = new NotificationCompat.Builder(this, channelId)
@@ -288,6 +289,17 @@ public class SendStickerActivity extends AppCompatActivity {
         } else {
             Log.e("Sticker receiving error", "Users have different versions of the app");
         }
+    }
+
+    private Integer getStickerIdFromMap(String imageName) {
+        Integer stickerId= null;
+        for(Map.Entry entry: imageIdToFilenameMap.entrySet()){
+            if(imageName.equals(entry.getValue())){
+                stickerId = (Integer) entry.getKey();
+                break; //breaking because its one to one map
+            }
+        }
+        return stickerId;
     }
 
     private void getNotification() {
