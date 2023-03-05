@@ -1,19 +1,11 @@
 package edu.northeastern.numad23sp_team7;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.core.content.ContextCompat;
-
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,6 +19,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
+
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,12 +33,12 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import edu.northeastern.numad23sp_team7.model.History;
 import edu.northeastern.numad23sp_team7.model.User;
@@ -333,7 +330,6 @@ public class SendStickerActivity extends AppCompatActivity {
             Notification noti = new NotificationCompat.Builder(this, channelId)
                     .setSmallIcon(R.drawable.ic_launcher_yelp_foreground)
                     .setLargeIcon(largeIconBitmap)
-
                     .setContentTitle(history.getUsername())
                     .setContentText("You just received a sticker from " + history.getUsername() + " !")
 
@@ -350,38 +346,43 @@ public class SendStickerActivity extends AppCompatActivity {
         }
     }
 
-        private void getNotification() {
-            DatabaseReference currentUserRef = mDatabase.child(loggedInUsername).child("receivedRecords");
-            currentUserRef.addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    History history = snapshot.getValue(History.class);
-                    sendNotification(history);
-                }
-                @Override
-                public void onChildChanged(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    Log.d("Firebase", "Child changed: " + snapshot.getKey());
-                }
-                @Override
-                public void onChildRemoved(@androidx.annotation.NonNull DataSnapshot snapshot) {
-                    Log.d("Firebase", "Child removed: " + snapshot.getKey());
-                }
-                @Override
-                public void onChildMoved(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    Log.d("Firebase", "Child moved: " + snapshot.getKey());
-                }
-                @Override
-                public void onCancelled(@androidx.annotation.NonNull DatabaseError error) {
-                    Log.e("Firebase", "Error listening for changes: " + error.getMessage());
-                }
-            });
+    private void getNotification() {
+//        DatabaseReference currentUserRef = mDatabase.child(loggedInUsername).child("receivedRecords");
+        DatabaseReference currentUserRef = mDatabase.child(loggedInUsername);
+        currentUserRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                History history = snapshot.getValue(History.class);
+                sendNotification(history);
+            }
+
+            @Override
+            public void onChildChanged(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Log.d("Firebase", "Child changed: " + snapshot.getKey());
+            }
+
+            @Override
+            public void onChildRemoved(@androidx.annotation.NonNull DataSnapshot snapshot) {
+                Log.d("Firebase", "Child removed: " + snapshot.getKey());
+            }
+
+            @Override
+            public void onChildMoved(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Log.d("Firebase", "Child moved: " + snapshot.getKey());
+            }
+
+            @Override
+            public void onCancelled(@androidx.annotation.NonNull DatabaseError error) {
+                Log.e("Firebase", "Error listening for changes: " + error.getMessage());
+            }
+        });
     }
 
 
     private Integer getStickerIdFromMap(String imageName) {
-        Integer stickerId= null;
-        for(Map.Entry entry: imageIdToFilenameMap.entrySet()){
-            if(imageName.equals(entry.getValue())){
+        Integer stickerId = null;
+        for (Map.Entry entry : imageIdToFilenameMap.entrySet()) {
+            if (imageName.equals(entry.getValue())) {
                 stickerId = (Integer) entry.getKey();
                 break; //breaking because its one to one map
             }
