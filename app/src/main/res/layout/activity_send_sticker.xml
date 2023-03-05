@@ -88,22 +88,22 @@
         android:id="@+id/sticker1"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/sticker1"
         android:clickable="true"
+        android:src="@drawable/sticker1"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/select_sticker"
         app:layout_constraintTop_toBottomOf="@+id/select_sticker"
-        app:layout_constraintVertical_bias="0.15" />
+        app:layout_constraintVertical_bias="0.114" />
 
     <ImageView
         android:id="@+id/sticker2"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/sticker2"
         android:clickable="true"
+        android:src="@drawable/sticker2"
 
         app:layout_constraintBottom_toBottomOf="@+id/sticker1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -149,9 +149,10 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sticker2"
-        app:layout_constraintVertical_bias="0.232" />
+        app:layout_constraintVertical_bias="0.381" />
 
     <Button
         android:id="@+id/buttonStickerSendHistory"
@@ -164,7 +165,7 @@
         app:layout_constraintHorizontal_bias="0.209"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/send_sticker"
-        app:layout_constraintVertical_bias="0.19" />
+        app:layout_constraintVertical_bias="0.315" />
 
     <Button
         android:id="@+id/buttonStickerReceiveHistory"

@@ -25,9 +25,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -51,6 +48,8 @@ public class SendStickerActivity extends AppCompatActivity {
 
     private static final String TAG = "SendStickerActivity";
     static final String HISTORY_USERNAME_KEY = "logged-in-user";
+    static final String HISTORY_SELECTED_RECEIVER_NAME = "selected-receiver";
+    static final String HISTORY_SELECTED_STICKER = "selected-sticker";
     static final String HISTORY_SEND_OR_RECEIVE_FLAG = "send-or-receive";
     static final String HISTORY_SEND_VALUE = "send";
     static final String HISTORY_RECEIVE_VALUE = "receive";
@@ -65,6 +64,7 @@ public class SendStickerActivity extends AppCompatActivity {
     private ImageView sticker4;
     private ImageView currentClickedSticker = null;
     private List<ImageView> stickerList = new ArrayList<>();
+    private int selectedStickerResourceId;
 
     private Spinner selectReceiverSpinner;
     private List<String> receiverList = new ArrayList<>();
@@ -93,23 +93,18 @@ public class SendStickerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         createNotificationChannel();
         setContentView(R.layout.activity_send_sticker);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
 
         // Connect with firebase
         mDatabase = FirebaseDatabase.getInstance().getReference(User.class.getSimpleName());
-
-
 
         // Get username from intent
         loggedInUsername = getIntent().getExtras().getString(HISTORY_USERNAME_KEY);
         usernameText = findViewById(R.id.username);
         usernameText.setText(loggedInUsername);
 
-        // TODO
-        // get all usernames except for the current user from database
-        // change the following adds codes
 
+        // get all usernames except for the current user from database
         selectReceiverSpinner = findViewById(R.id.spinner_receiver);
         spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new ArrayList<>());
         selectReceiverSpinner.setAdapter(spinnerAdapter);
@@ -130,6 +125,7 @@ public class SendStickerActivity extends AppCompatActivity {
                     spinnerAdapter.notifyDataSetChanged();
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Handle errors here
@@ -137,12 +133,10 @@ public class SendStickerActivity extends AppCompatActivity {
             }
         });
 
-
-
+        // Get and set the selected receiver username from the spinner
         selectReceiverSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // Get and set the selected receiver username from the spinner
                 String selectedReceiver = parent.getItemAtPosition(position).toString();
                 receiverUsername = selectedReceiver;
             }
@@ -266,7 +260,7 @@ public class SendStickerActivity extends AppCompatActivity {
             receivedSticker.buildDrawingCache();
             Notification noti = new NotificationCompat.Builder(this, channelId)
                     .setSmallIcon(R.drawable.ic_launcher_yelp_foreground)
-                    .setLargeIcon(currentClickedSticker.getDrawingCache())
+                    .setLargeIcon(receivedSticker.getDrawingCache())
 
                     .setContentTitle(history.getUsername())
                     .setContentText("You just received a sticker from " + history.getUsername() + " !")
@@ -284,9 +278,9 @@ public class SendStickerActivity extends AppCompatActivity {
     }
 
     private Integer getStickerIdFromMap(String imageName) {
-        Integer stickerId= null;
-        for(Map.Entry entry: imageIdToFilenameMap.entrySet()){
-            if(imageName.equals(entry.getValue())){
+        Integer stickerId = null;
+        for (Map.Entry entry : imageIdToFilenameMap.entrySet()) {
+            if (imageName.equals(entry.getValue())) {
                 stickerId = (Integer) entry.getKey();
                 break; //breaking because its one to one map
             }
