@@ -30,6 +30,7 @@ import edu.northeastern.numad23sp_team7.model.User;
 
 public class LogInActivity extends AppCompatActivity {
 
+    static final String HISTORY_USERNAME_KEY = "logged-in-user";
     public String currentUser;
     EditText usernameEdit;
     Button loginBtn;
@@ -64,9 +65,10 @@ public class LogInActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (!snapshot.exists()) {
-                        usersRef.child(username).setValue(true);
+                        usersRef.child(username).setValue(new User(username));
                     }
                     currentUser = username;
+                    Log.d("currentUser", currentUser);
                 }
 
                 @Override
@@ -80,7 +82,7 @@ public class LogInActivity extends AppCompatActivity {
 
     public void gotoSendActivity() {
         Intent intent = new Intent(this, SendStickerActivity.class);
+        intent.putExtra(HISTORY_USERNAME_KEY, currentUser);
         startActivity(intent);
-
     }
 }

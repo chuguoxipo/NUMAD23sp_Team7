@@ -102,15 +102,17 @@ public class SendStickerActivity extends AppCompatActivity {
 
         // TODO
         // change username as the current username
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            loggedInUsername = currentUser.getDisplayName();
-            usernameText = findViewById(R.id.username);
-            usernameText.setText(loggedInUsername);
-        }
+//        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        if (currentUser != null) {
+//            loggedInUsername = currentUser.getDisplayName();
+//            usernameText = findViewById(R.id.username);
+//            usernameText.setText(loggedInUsername);
+//        }
 
-
+        String username = getIntent().getExtras().getString(HISTORY_USERNAME_KEY);
+        usernameText = findViewById(R.id.username);
+        usernameText.setText(username);
 
         // TODO
         // get all usernames except for the current user from database
