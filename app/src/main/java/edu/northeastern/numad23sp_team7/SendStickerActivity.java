@@ -38,7 +38,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import edu.northeastern.numad23sp_team7.model.History;
 import edu.northeastern.numad23sp_team7.model.User;
@@ -231,17 +230,17 @@ public class SendStickerActivity extends AppCompatActivity {
             String stickerId,
             String senderUsername,
             String receiverUsername) {
-        mDatabase.child(senderUsername).runTransaction(new Transaction.Handler() {
+        mDatabase.child(senderUsername).child("sentRecords").runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
 
-                User user = mutableData.getValue(User.class);
-                if (user == null) {
-                    user = new User(senderUsername);
+                var currentSentRecords = (ArrayList<History>) mutableData.getValue();
+                if (currentSentRecords == null) {
+                    currentSentRecords = new ArrayList<>();
                 }
 
-                user.getSentRecords().add(new History(stickerId, receiverUsername, categoryMap.get(stickerId)));
-                mutableData.setValue(user);
+                currentSentRecords.add(new History(stickerId, receiverUsername, categoryMap.get(stickerId)));
+                mutableData.setValue(currentSentRecords);
                 return Transaction.success(mutableData);
             }
 
@@ -262,17 +261,17 @@ public class SendStickerActivity extends AppCompatActivity {
             String stickerId,
             String senderUsername,
             String receiverUsername) {
-        mDatabase.child(receiverUsername).runTransaction(new Transaction.Handler() {
+        mDatabase.child(receiverUsername).child("receivedRecords").runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
 
-                User user = mutableData.getValue(User.class);
-                if (user == null) {
-                    user = new User(receiverUsername);
+                var currentReceiverHistory = (ArrayList<History>) mutableData.getValue();
+                if (currentReceiverHistory == null) {
+                    currentReceiverHistory = new ArrayList<>();
                 }
 
-                user.getReceivedRecords().add(new History(stickerId, senderUsername, categoryMap.get(stickerId)));
-                mutableData.setValue(user);
+                currentReceiverHistory.add(new History(stickerId, senderUsername, categoryMap.get(stickerId)));
+                mutableData.setValue(currentReceiverHistory);
                 return Transaction.success(mutableData);
             }
 
