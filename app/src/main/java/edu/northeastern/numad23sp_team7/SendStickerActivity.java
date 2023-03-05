@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import edu.northeastern.numad23sp_team7.model.History;
 import edu.northeastern.numad23sp_team7.model.User;
@@ -197,17 +197,14 @@ public class SendStickerActivity extends AppCompatActivity {
                 String imageFilename = imageIdToFilenameMap.get(stickerId);
 
                 // update database
-                // TODO
-                // change senderUsername to the current signedIn user's username
-
                 updateReceiverHistory(mDatabase, imageFilename, loggedInUsername, receiverUsername);
                 updateSenderHistory(mDatabase, imageFilename, loggedInUsername, receiverUsername);
+
                 Log.d(TAG, "sent");
                 Toast.makeText(getApplicationContext(), "Sticker Sent", Toast.LENGTH_LONG).show();
 //                    sendNotification();
             }
         });
-
         sendHistoryButton = findViewById(R.id.buttonStickerSendHistory);
         sendHistoryButton.setOnClickListener(view -> {
             Intent intent = new Intent(this, StickerHistoryActivity.class);
@@ -228,13 +225,13 @@ public class SendStickerActivity extends AppCompatActivity {
         getNotification();
     }
 
-    // add Sent History to sender's sentRecords
+    // update Sent History to sender's sentRecords
     private void updateSenderHistory(
             DatabaseReference mDatabase,
             String stickerId,
             String senderUsername,
             String receiverUsername) {
-        mDatabase.child(senderUsername).runTransaction(new Transaction.Handler() {
+        mDatabase.child(senderUsername).push().runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
 
