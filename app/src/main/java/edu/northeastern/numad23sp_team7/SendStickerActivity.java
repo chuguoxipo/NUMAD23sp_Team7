@@ -231,7 +231,7 @@ public class SendStickerActivity extends AppCompatActivity {
             String stickerId,
             String senderUsername,
             String receiverUsername) {
-        mDatabase.child(senderUsername).push().runTransaction(new Transaction.Handler() {
+        mDatabase.child(senderUsername).runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
 
