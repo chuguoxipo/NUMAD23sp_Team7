@@ -137,6 +137,7 @@ public class SendStickerActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Handle errors here
+                Log.w("getErrorMsg", "onCancelled", databaseError.toException());
             }
         });
 
@@ -224,31 +225,6 @@ public class SendStickerActivity extends AppCompatActivity {
                     updateSenderHistory(mDatabase, imageFilename, loggedInUsername, receiverUsername);
                     Log.d(TAG, "sent");
                     Toast.makeText(getApplicationContext(), "Sticker Sent", Toast.LENGTH_LONG).show();
-
-                    DatabaseReference currentUserRef = mDatabase.child(loggedInUsername).child("receivedRecords");
-                    currentUserRef.addChildEventListener(new ChildEventListener() {
-                        @Override
-                        public void onChildAdded(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                            History history = snapshot.getValue(History.class);
-                            sendNotification(v, history);
-                        }
-                        @Override
-                        public void onChildChanged(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                            Log.d("Firebase", "Child changed: " + snapshot.getKey());
-                        }
-                        @Override
-                        public void onChildRemoved(@androidx.annotation.NonNull DataSnapshot snapshot) {
-                            Log.d("Firebase", "Child removed: " + snapshot.getKey());
-                        }
-                        @Override
-                        public void onChildMoved(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                            Log.d("Firebase", "Child moved: " + snapshot.getKey());
-                        }
-                        @Override
-                        public void onCancelled(@androidx.annotation.NonNull DatabaseError error) {
-                            Log.e("Firebase", "Error listening for changes: " + error.getMessage());
-                        }
-                    });
                 }
             }
         });
@@ -269,6 +245,8 @@ public class SendStickerActivity extends AppCompatActivity {
             intent.putExtra(HISTORY_SEND_OR_RECEIVE_FLAG, HISTORY_RECEIVE_VALUE);
             startActivity(intent);
         });
+
+        getNotification();
     }
 
     private void createNotificationChannel() {
@@ -285,7 +263,7 @@ public class SendStickerActivity extends AppCompatActivity {
         }
     }
 
-    public void sendNotification(View view, History history) {
+    public void sendNotification(History history) {
         Intent intent = new Intent(this, ReceiveStickerActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent moreIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, PendingIntent.FLAG_IMMUTABLE);
@@ -310,6 +288,33 @@ public class SendStickerActivity extends AppCompatActivity {
         } else {
             Log.e("Sticker receiving error", "Users have different versions of the app");
         }
+    }
+
+    private void getNotification() {
+        DatabaseReference currentUserRef = mDatabase.child(loggedInUsername).child("receivedRecords");
+        currentUserRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                History history = snapshot.getValue(History.class);
+                sendNotification(history);
+            }
+            @Override
+            public void onChildChanged(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Log.d("Firebase", "Child changed: " + snapshot.getKey());
+            }
+            @Override
+            public void onChildRemoved(@androidx.annotation.NonNull DataSnapshot snapshot) {
+                Log.d("Firebase", "Child removed: " + snapshot.getKey());
+            }
+            @Override
+            public void onChildMoved(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Log.d("Firebase", "Child moved: " + snapshot.getKey());
+            }
+            @Override
+            public void onCancelled(@androidx.annotation.NonNull DatabaseError error) {
+                Log.e("Firebase", "Error listening for changes: " + error.getMessage());
+            }
+        });
     }
 
 
