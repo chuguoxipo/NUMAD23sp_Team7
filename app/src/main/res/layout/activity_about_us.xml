@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AboutUsActivity">
+
+
+    <ImageView
+        android:id="@+id/backBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/team_name"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/ic_baseline_arrow_back_24" />
+
+    <TextView
+        android:id="@+id/team_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:paddingLeft="30dp"
+        android:text="Team 7"
+        android:textColor="@color/black"
+        android:textSize="40dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/qiansha"
+        android:text="Qiansha Meng"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:textColor="#ff0000"
+        android:gravity="center"
+        android:padding="40dp"
+        android:layout_below="@+id/team_name"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/weixin"
+        android:textStyle="bold"
+        android:text="Weixin Liu"
+        android:textSize="30dp"
+        android:textColor="#ffa500"
+        android:padding="40dp"
+        android:gravity="center"
+        android:layout_below="@+id/qiansha"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/siyue"
+        android:text="Siyue"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:textColor="#008000"
+        android:padding="40dp"
+        android:gravity="center"
+        android:layout_below="@+id/weixin"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lingfei"
+        android:text="Lingfei Zhang"
+        android:textSize="30dp"
+        android:textColor="#0000ff"
+        android:textStyle="bold"
+        android:padding="40dp"
+        android:gravity="center"
+        android:layout_below="@+id/siyue"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/zilin"
+        android:text="Zili Zhou"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:textColor="#ee82ee"
+        android:padding="40dp"
+        android:gravity="center"
+        android:layout_below="@+id/lingfei"/>
+</RelativeLayout>

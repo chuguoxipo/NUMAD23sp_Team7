@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
@@ -15,11 +16,18 @@
         android:theme="@style/Theme.NUMAD23sp_Team7"
         tools:targetApi="31">
         <activity
+            android:name=".AboutUsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ReceiveStickerActivity"
-            android:exported="false" >
-        <meta-data
-            android:name="android.app.lib_name"
-            android:value="" />
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
         <activity
             android:name=".StickerHistoryActivity"
@@ -65,6 +73,5 @@
                 android:value="" />
         </activity>
     </application>
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
 </manifest>

@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnA6 = findViewById(R.id.btn_a6);
         Button btnA7 = findViewById(R.id.btn_a7);
+        Button btnAbout = findViewById(R.id.btn_about);
         Button btnGroup = findViewById(R.id.btn_group_project);
 
         btnA6.setOnClickListener(new View.OnClickListener() {
@@ -34,6 +35,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoAboutActivity();
+            }
+        });
+
     }
 
     public void goToA6Activity(){
@@ -43,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToA8Activity(){
         Intent intent = new Intent(this, LogInActivity.class);
+        startActivity(intent);
+    }
+
+    public void gotoAboutActivity() {
+        Intent intent = new Intent(this, AboutUsActivity.class);
         startActivity(intent);
     }
 }
