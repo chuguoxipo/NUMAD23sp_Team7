@@ -60,7 +60,7 @@ public class LogInActivity extends AppCompatActivity {
             return;
         }
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference usersRef = database.getReference("users");
+        DatabaseReference usersRef = database.getReference(User.class.getSimpleName());
 
         usersRef.child(username).addListenerForSingleValueEvent(
             new ValueEventListener() {
@@ -69,7 +69,7 @@ public class LogInActivity extends AppCompatActivity {
                     if (!snapshot.exists()) {
                         usersRef.child(username).setValue(new User(username));
                     }
-                    currentUser = new StringBuilder(username).toString();
+                    currentUser = username;
                 }
 
                 @Override

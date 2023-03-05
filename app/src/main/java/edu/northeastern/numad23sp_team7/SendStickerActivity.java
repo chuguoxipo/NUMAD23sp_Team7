@@ -120,7 +120,7 @@ public class SendStickerActivity extends AppCompatActivity {
 //        receiverList.add("user1");
 //        receiverList.add("user2");
 //        receiverList.add("user3");
-        FirebaseDatabase.getInstance().getReference("users").addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference(User.class.getSimpleName()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
