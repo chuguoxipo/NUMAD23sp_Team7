@@ -347,8 +347,8 @@ public class SendStickerActivity extends AppCompatActivity {
     }
 
     private void getNotification() {
-//        DatabaseReference currentUserRef = mDatabase.child(loggedInUsername).child("receivedRecords");
-        DatabaseReference currentUserRef = mDatabase.child(loggedInUsername);
+        DatabaseReference currentUserRef = mDatabase.child(loggedInUsername).child("receivedRecords");
+//        DatabaseReference currentUserRef = mDatabase.child(loggedInUsername);
         currentUserRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
