@@ -46,6 +46,8 @@ public class LogInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 userLogin();
+                currentUser = usernameEdit.getText().toString().trim();
+                Log.d("currentUser", currentUser);
                 gotoSendActivity();
             }
         });
@@ -67,8 +69,7 @@ public class LogInActivity extends AppCompatActivity {
                     if (!snapshot.exists()) {
                         usersRef.child(username).setValue(new User(username));
                     }
-                    currentUser = username;
-                    Log.d("currentUser", currentUser);
+                    currentUser = new StringBuilder(username).toString();
                 }
 
                 @Override
