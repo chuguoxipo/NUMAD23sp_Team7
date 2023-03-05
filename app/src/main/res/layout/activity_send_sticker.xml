@@ -82,7 +82,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/select_receiver"
         app:layout_constraintTop_toBottomOf="@+id/select_receiver"
-        app:layout_constraintVertical_bias="0.076" />
+        app:layout_constraintVertical_bias="0.038" />
 
     <ImageView
         android:id="@+id/sticker1"
@@ -96,7 +96,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/select_sticker"
         app:layout_constraintTop_toBottomOf="@+id/select_sticker"
-        app:layout_constraintVertical_bias="0.114" />
+        app:layout_constraintVertical_bias="0.058" />
 
     <ImageView
         android:id="@+id/sticker2"
@@ -149,10 +149,10 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintHorizontal_bias="0.458"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sticker2"
-        app:layout_constraintVertical_bias="0.381" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewStickerCategory3"
+        app:layout_constraintVertical_bias="0.322" />
 
     <Button
         android:id="@+id/buttonStickerSendHistory"
@@ -162,10 +162,10 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.209"
+        app:layout_constraintHorizontal_bias="0.156"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/send_sticker"
-        app:layout_constraintVertical_bias="0.315" />
+        app:layout_constraintTop_toTopOf="@+id/send_sticker"
+        app:layout_constraintVertical_bias="0.251" />
 
     <Button
         android:id="@+id/buttonStickerReceiveHistory"
@@ -175,7 +175,7 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.671"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toEndOf="@+id/buttonStickerSendHistory"
         app:layout_constraintTop_toTopOf="@+id/buttonStickerSendHistory"
         app:layout_constraintVertical_bias="0.0" />
