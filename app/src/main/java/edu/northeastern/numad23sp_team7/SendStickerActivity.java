@@ -176,41 +176,35 @@ public class SendStickerActivity extends AppCompatActivity {
         textCategory4.setText(categoryMap.get("sticker4"));
 
         for (int i = 0; i < 4; i++) {
-            stickerList.get(i).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (currentClickedSticker != null) {
-                        currentClickedSticker.setBackground(null);
-                    }
-                    v.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.sticker_border));
-                    currentClickedSticker = (ImageView) v;
-
+            stickerList.get(i).setOnClickListener(view -> {
+                if (currentClickedSticker != null) {
+                    currentClickedSticker.setBackground(null);
                 }
+                view.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.sticker_border));
+                currentClickedSticker = (ImageView) view;
+
             });
         }
 
         sendButton = findViewById(R.id.send_sticker);
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            // send button
-            @Override
-            public void onClick(View v) {
-                // determine if receiver or stickerId is null
-                if (receiverUsername == null || currentClickedSticker == null) {
-                    Toast.makeText(getApplicationContext(), "Please choose a receiver and a sticker", Toast.LENGTH_LONG).show();
-                } else {
-                    int stickerId = currentClickedSticker.getId();
-                    String imageFilename = imageIdToFilenameMap.get(stickerId);
+        // send button
+        sendButton.setOnClickListener(view -> {
+            // determine if receiver or stickerId is null
+            if (receiverUsername == null || currentClickedSticker == null) {
+                Toast.makeText(getApplicationContext(), "Please choose a receiver and a sticker", Toast.LENGTH_LONG).show();
+            } else {
+                int stickerId = currentClickedSticker.getId();
+                String imageFilename = imageIdToFilenameMap.get(stickerId);
 
-                    // update database
-                    // TODO
-                    // change senderUsername to the current signedIn user's username
+                // update database
+                // TODO
+                // change senderUsername to the current signedIn user's username
 
-                    updateReceiverHistory(mDatabase, imageFilename, loggedInUsername, receiverUsername);
-                    updateSenderHistory(mDatabase, imageFilename, loggedInUsername, receiverUsername);
-                    Log.d(TAG, "sent");
-                    Toast.makeText(getApplicationContext(), "Sticker Sent", Toast.LENGTH_LONG).show();
+                updateReceiverHistory(mDatabase, imageFilename, loggedInUsername, receiverUsername);
+                updateSenderHistory(mDatabase, imageFilename, loggedInUsername, receiverUsername);
+                Log.d(TAG, "sent");
+                Toast.makeText(getApplicationContext(), "Sticker Sent", Toast.LENGTH_LONG).show();
 //                    sendNotification();
-                }
             }
         });
 
@@ -320,7 +314,7 @@ public class SendStickerActivity extends AppCompatActivity {
         String channelId = getString(R.string.channel_id);
 //        History testHistory = new History("sticker1", "testUser", "testCategory");
         Integer receivedStickerId = getStickerIdFromMap(history.getStickerId());
-        ImageView receivedSticker = (ImageView) findViewById(receivedStickerId);
+        ImageView receivedSticker = findViewById(receivedStickerId);
         if (receivedSticker != null) {
             receivedSticker.setDrawingCacheEnabled(true);
             Bitmap largeIconBitmap = Bitmap.createBitmap(receivedSticker.getDrawingCache());
@@ -348,7 +342,6 @@ public class SendStickerActivity extends AppCompatActivity {
 
     private void getNotification() {
         DatabaseReference currentUserRef = mDatabase.child(loggedInUsername).child("receivedRecords");
-//        DatabaseReference currentUserRef = mDatabase.child(loggedInUsername);
         currentUserRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
