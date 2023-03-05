@@ -12,6 +12,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -86,7 +88,6 @@ public class SendStickerActivity extends AppCompatActivity {
 
     private final int NOTIFICATION_UNIQUE_ID = 7;
     private static int notificationGeneration = 1;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,6 +218,7 @@ public class SendStickerActivity extends AppCompatActivity {
                     updateSenderHistory(mDatabase, imageFilename, loggedInUsername, receiverUsername);
                     Log.d(TAG, "sent");
                     Toast.makeText(getApplicationContext(), "Sticker Sent", Toast.LENGTH_LONG).show();
+//                    sendNotification();
                 }
             }
         });
@@ -237,88 +239,8 @@ public class SendStickerActivity extends AppCompatActivity {
             intent.putExtra(HISTORY_SEND_OR_RECEIVE_FLAG, HISTORY_RECEIVE_VALUE);
             startActivity(intent);
         });
-
+//        receiverUsername = loggedInUsername;
         getNotification();
-    }
-
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            String description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("send_sticker_channel_id", name, importance);
-            channel.setDescription(description);
-            channel.enableLights(true);
-            channel.setLockscreenVisibility(android.R.color.holo_green_light);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
-
-    public void sendNotification(History history) {
-        Intent intent = new Intent(this, ReceiveStickerActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent moreIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, PendingIntent.FLAG_IMMUTABLE);
-        String channelId = getString(R.string.channel_id);
-        Integer receivedStickerId = getStickerIdFromMap(history.getStickerId());
-        ImageView receivedSticker = (ImageView) findViewById(receivedStickerId);
-        if (receivedSticker != null) {
-            receivedSticker.buildDrawingCache();
-            Notification noti = new NotificationCompat.Builder(this, channelId)
-                    .setSmallIcon(R.drawable.ic_launcher_yelp_foreground)
-                    .setLargeIcon(currentClickedSticker.getDrawingCache())
-
-                    .setContentTitle(history.getUsername())
-                    .setContentText("You just received a sticker from " + history.getUsername() + " !")
-
-                    .addAction(R.drawable.search, "More", moreIntent)
-                    .setContentIntent(moreIntent)
-                    .setAutoCancel(true)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .build();
-            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            notificationManager.notify(NOTIFICATION_UNIQUE_ID + notificationGeneration, noti);
-        } else {
-            Log.e("Sticker receiving error", "Users have different versions of the app");
-        }
-    }
-
-    private Integer getStickerIdFromMap(String imageName) {
-        Integer stickerId= null;
-        for(Map.Entry entry: imageIdToFilenameMap.entrySet()){
-            if(imageName.equals(entry.getValue())){
-                stickerId = (Integer) entry.getKey();
-                break; //breaking because its one to one map
-            }
-        }
-        return stickerId;
-    }
-
-    private void getNotification() {
-        DatabaseReference currentUserRef = mDatabase.child(loggedInUsername).child("receivedRecords");
-        currentUserRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                History history = snapshot.getValue(History.class);
-                sendNotification(history);
-            }
-            @Override
-            public void onChildChanged(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Log.d("Firebase", "Child changed: " + snapshot.getKey());
-            }
-            @Override
-            public void onChildRemoved(@androidx.annotation.NonNull DataSnapshot snapshot) {
-                Log.d("Firebase", "Child removed: " + snapshot.getKey());
-            }
-            @Override
-            public void onChildMoved(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Log.d("Firebase", "Child moved: " + snapshot.getKey());
-            }
-            @Override
-            public void onCancelled(@androidx.annotation.NonNull DatabaseError error) {
-                Log.e("Firebase", "Error listening for changes: " + error.getMessage());
-            }
-        });
     }
 
 
@@ -382,5 +304,96 @@ public class SendStickerActivity extends AppCompatActivity {
                 Log.d(TAG, "postTransaction:onComplete:" + databaseError);
             }
         });
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("send_sticker_channel_id", name, importance);
+            channel.setDescription(description);
+            channel.enableLights(true);
+            channel.setLockscreenVisibility(android.R.color.holo_green_light);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    public void sendNotification(History history) {
+//        Intent intent = new Intent(this, ReceiveStickerActivity.class);
+        Intent intent = new Intent(this, StickerHistoryActivity.class);
+        intent.putExtra(HISTORY_USERNAME_KEY, loggedInUsername);
+        intent.putExtra(HISTORY_SEND_OR_RECEIVE_FLAG, HISTORY_RECEIVE_VALUE);
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent moreIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, PendingIntent.FLAG_IMMUTABLE);
+        String channelId = getString(R.string.channel_id);
+//        History testHistory = new History("sticker1", "testUser", "testCategory");
+        Integer receivedStickerId = getStickerIdFromMap(history.getStickerId());
+        ImageView receivedSticker = (ImageView) findViewById(receivedStickerId);
+        if (receivedSticker != null) {
+            receivedSticker.setDrawingCacheEnabled(true);
+            Bitmap largeIconBitmap = Bitmap.createBitmap(receivedSticker.getDrawingCache());
+            receivedSticker.setDrawingCacheEnabled(false);
+
+            receivedSticker.buildDrawingCache();
+            Notification noti = new NotificationCompat.Builder(this, channelId)
+                    .setSmallIcon(R.drawable.ic_launcher_yelp_foreground)
+                    .setLargeIcon(largeIconBitmap)
+
+                    .setContentTitle(history.getUsername())
+                    .setContentText("You just received a sticker from " + history.getUsername() + " !")
+
+                    .addAction(R.drawable.search, "More", moreIntent)
+                    .setContentIntent(moreIntent)
+                    .setAutoCancel(true)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .build();
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            notificationManager.notify(NOTIFICATION_UNIQUE_ID + notificationGeneration, noti);
+        } else {
+            Log.e("Sticker receiving error", "Users have different versions of the app");
+        }
+    }
+
+        private void getNotification() {
+            DatabaseReference currentUserRef = mDatabase.child(loggedInUsername).child("receivedRecords");
+            currentUserRef.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    History history = snapshot.getValue(History.class);
+                    sendNotification(history);
+                }
+                @Override
+                public void onChildChanged(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    Log.d("Firebase", "Child changed: " + snapshot.getKey());
+                }
+                @Override
+                public void onChildRemoved(@androidx.annotation.NonNull DataSnapshot snapshot) {
+                    Log.d("Firebase", "Child removed: " + snapshot.getKey());
+                }
+                @Override
+                public void onChildMoved(@androidx.annotation.NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    Log.d("Firebase", "Child moved: " + snapshot.getKey());
+                }
+                @Override
+                public void onCancelled(@androidx.annotation.NonNull DatabaseError error) {
+                    Log.e("Firebase", "Error listening for changes: " + error.getMessage());
+                }
+            });
+    }
+
+
+    private Integer getStickerIdFromMap(String imageName) {
+        Integer stickerId= null;
+        for(Map.Entry entry: imageIdToFilenameMap.entrySet()){
+            if(imageName.equals(entry.getValue())){
+                stickerId = (Integer) entry.getKey();
+                break; //breaking because its one to one map
+            }
+        }
+        return stickerId;
     }
 }
