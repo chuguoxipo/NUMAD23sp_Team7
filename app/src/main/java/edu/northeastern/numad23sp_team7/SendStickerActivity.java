@@ -82,7 +82,7 @@ public class SendStickerActivity extends AppCompatActivity {
 
     private Map<String, String> categoryMap;
     private Map<Integer, String> imageIdToFilenameMap = new HashMap<>();
-    private String loggedInUsername = "user1";
+    private String loggedInUsername;
 
     private final int NOTIFICATION_UNIQUE_ID = 7;
     private static int notificationGeneration = 1;
@@ -100,38 +100,34 @@ public class SendStickerActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference(User.class.getSimpleName());
 
 
-        // TODO
-        // change username as the current username
-//        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        if (currentUser != null) {
-//            loggedInUsername = currentUser.getDisplayName();
-//            usernameText = findViewById(R.id.username);
-//            usernameText.setText(loggedInUsername);
-//        }
 
-        String username = getIntent().getExtras().getString(HISTORY_USERNAME_KEY);
+        // Get username from intent
+        loggedInUsername = getIntent().getExtras().getString(HISTORY_USERNAME_KEY);
         usernameText = findViewById(R.id.username);
-        usernameText.setText(username);
+        usernameText.setText(loggedInUsername);
 
         // TODO
         // get all usernames except for the current user from database
         // change the following adds codes
-//        receiverList.add("user1");
-//        receiverList.add("user2");
-//        receiverList.add("user3");
-        FirebaseDatabase.getInstance().getReference(User.class.getSimpleName()).addListenerForSingleValueEvent(new ValueEventListener() {
+
+        selectReceiverSpinner = findViewById(R.id.spinner_receiver);
+        spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new ArrayList<>());
+        selectReceiverSpinner.setAdapter(spinnerAdapter);
+
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                ArrayList<String> tempList = new ArrayList<>();
                 // Loop through all users in the dataSnapshot
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     User user = userSnapshot.getValue(User.class);
-
                     // Add the username to the list, if it is not the current loggedin user's username
                     if (!user.getUsername().equals(loggedInUsername)) {
-                        receiverList.add(user.getUsername());
+                        tempList.add(user.getUsername());
                     }
+                    spinnerAdapter.clear();
+                    spinnerAdapter.addAll(tempList);
+                    spinnerAdapter.notifyDataSetChanged();
                 }
             }
             @Override
@@ -142,9 +138,6 @@ public class SendStickerActivity extends AppCompatActivity {
         });
 
 
-        selectReceiverSpinner = findViewById(R.id.spinner_receiver);
-        spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, receiverList);
-        selectReceiverSpinner.setAdapter(spinnerAdapter);
 
         selectReceiverSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -219,8 +212,7 @@ public class SendStickerActivity extends AppCompatActivity {
                     // update database
                     // TODO
                     // change senderUsername to the current signedIn user's username
-                    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                    String loggedInUsername = firebaseAuth.getCurrentUser().getDisplayName();
+
                     updateReceiverHistory(mDatabase, imageFilename, loggedInUsername, receiverUsername);
                     updateSenderHistory(mDatabase, imageFilename, loggedInUsername, receiverUsername);
                     Log.d(TAG, "sent");
