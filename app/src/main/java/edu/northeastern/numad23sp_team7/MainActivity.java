@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import edu.northeastern.numad23sp_team7.FireBaseModel.LogInActivity;
+import edu.northeastern.numad23sp_team7.huskymarket.activities.HuskyMainActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,20 +43,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnGroup.setOnClickListener(v -> goToGroupProject());
+
     }
 
-    public void goToA6Activity(){
+    public void goToA6Activity() {
         Intent intent = new Intent(this, AtYourServiceActivity.class);
         startActivity(intent);
     }
 
-    public void goToA8Activity(){
+    public void goToA8Activity() {
         Intent intent = new Intent(this, LogInActivity.class);
         startActivity(intent);
     }
 
     public void gotoAboutActivity() {
         Intent intent = new Intent(this, AboutUsActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToGroupProject() {
+        Intent intent = new Intent(this, HuskyMainActivity.class);
         startActivity(intent);
     }
 }
