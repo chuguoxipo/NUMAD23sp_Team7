@@ -28,6 +28,7 @@
         android:paddingBottom="@dimen/_8sdp"
         android:textColor="@color/black"
         android:textSize="@dimen/_13ssp"
+        android:text="Hello, how are you?"
         app:layout_constraintEnd_toStartOf="@id/imageProfile"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_max="wrap"
@@ -40,6 +41,7 @@
         android:layout_marginTop="@dimen/_4sdp"
         android:textColor="@color/black"
         android:textSize="@dimen/_8ssp"
+        android:text="2023-03-02 14:22 pm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textMessage" />
 

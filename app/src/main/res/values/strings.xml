@@ -15,5 +15,6 @@
     <string name="channel_description">send sticker notification</string>
     <string name="type_a_message">Type a message</string>
     <string name="choose_a_category">Choose A Category</string>
+    <string name="search">Search</string>
 
 </resources>
