@@ -17,4 +17,23 @@
     <string name="choose_a_category">Choose A Category</string>
     <string name="search">Search</string>
 
+    <string-array name="categories">
+        <item>Category</item>
+        <item>book</item>
+        <item>furniture</item>
+        <item>clothing</item>
+        <item>stationery</item>
+        <item>electronics</item>
+    </string-array>
+
+    <string-array name="locations">
+        <item>Location</item>
+        <item>Seattle</item>
+        <item>Boston</item>
+        <item>San Jose</item>
+        <item>Vancouver</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
