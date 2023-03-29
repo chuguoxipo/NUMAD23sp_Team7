@@ -1,4 +1,4 @@
-package edu.northeastern.numad23sp_team7.huskymarket.adapters;
+package edu.northeastern.numad23sp_team7.huskymarket.adapter;
 
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
@@ -11,7 +11,7 @@ import java.util.List;
 
 import edu.northeastern.numad23sp_team7.databinding.ItemReceivedMessageBinding;
 import edu.northeastern.numad23sp_team7.databinding.ItemSentMessageBinding;
-import edu.northeastern.numad23sp_team7.huskymarket.models.ChatMessage;
+import edu.northeastern.numad23sp_team7.huskymarket.model.ChatMessage;
 
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -67,7 +67,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         private final ItemSentMessageBinding binding;
 
-        SentMessageViewHolder(ItemSentMessageBinding itemSentMessageBinding) {
+        public SentMessageViewHolder(ItemSentMessageBinding itemSentMessageBinding) {
             super(itemSentMessageBinding.getRoot());
             binding = itemSentMessageBinding;
         }
@@ -84,7 +84,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         private final ItemReceivedMessageBinding binding;
 
-        ReceivedMessageViewHolder(ItemReceivedMessageBinding itemReceivedMessageBinding) {
+        public ReceivedMessageViewHolder(ItemReceivedMessageBinding itemReceivedMessageBinding) {
             super(itemReceivedMessageBinding.getRoot());
             binding = itemReceivedMessageBinding;
         }

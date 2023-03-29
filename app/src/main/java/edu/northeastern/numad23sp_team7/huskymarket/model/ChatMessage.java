@@ -1,4 +1,4 @@
-package edu.northeastern.numad23sp_team7.huskymarket.models;
+package edu.northeastern.numad23sp_team7.huskymarket.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
