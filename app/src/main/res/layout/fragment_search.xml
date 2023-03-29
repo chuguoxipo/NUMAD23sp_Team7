@@ -12,8 +12,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutSearchPageTopBar"
             android:layout_width="match_parent"
-            android:layout_height="85dp"
+            android:layout_height="wrap_content"
             android:background="@color/primary"
+            android:paddingBottom="@dimen/_15sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -31,7 +32,7 @@
             <EditText
                 android:id="@+id/editTextHuskySearchBox"
                 android:layout_width="0dp"
-                android:layout_height="45dp"
+                android:layout_height="@dimen/_32sdp"
                 android:background="@drawable/background_chat_input"
                 android:drawableStart="@drawable/ic_message_search"
                 android:drawablePadding="@dimen/_8sdp"
@@ -41,10 +42,10 @@
                 android:paddingStart="@dimen/_12sdp"
                 android:paddingTop="@dimen/_3sdp"
                 android:paddingBottom="@dimen/_3sdp"
-                android:textSize="15sp"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="15dp"
+                android:textSize="@dimen/_10ssp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_14sdp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/backButtonHuskySearchBar"
@@ -55,7 +56,7 @@
         <LinearLayout
             android:id="@+id/layoutSearchPageFilterBar"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/_40sdp"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/layoutSearchPageTopBar">
 
