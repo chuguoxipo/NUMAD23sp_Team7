@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
+    private String username;
     private String userId;
     private String email;
     private String password;
@@ -13,7 +14,8 @@ public class User {
     public User() {
     }
 
-    public User(String userId, String email, String password, String profileImage, List<Product> favorites) {
+    public User(String username, String userId, String email, String password, String profileImage, List<Product> favorites) {
+        this.username = username;
         this.userId = userId;
         this.email = email;
         this.password = password;
@@ -59,5 +61,13 @@ public class User {
 
     public void setFavorites(List<Product> favorites) {
         this.favorites = favorites;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#cc0100</color>
+    <color name="primary">#CC0100</color>
     <color name="primary_dark">#820000</color>
     <color name="secondary">#F9F5EB</color>
     <color name="tertiary">#8B7E74</color>
@@ -11,4 +11,5 @@
     <color name="icon_background">#C8B6A6</color>
     <color name="received_message_background">#D2D79F</color>
     <color name="sent_message_background">#C8B6A6</color>
+    <color name="dark_brown">#362222</color>
 </resources>
