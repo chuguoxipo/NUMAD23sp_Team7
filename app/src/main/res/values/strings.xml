@@ -47,5 +47,10 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="log_in">Log in</string>
+    <string name="username">Username</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="upload_profile_image">Upload Profile Image</string>
+    <string name="sign_up">Sign up</string>
 
 </resources>

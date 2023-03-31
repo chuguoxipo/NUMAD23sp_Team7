@@ -11,5 +11,6 @@
     <color name="icon_background">#C8B6A6</color>
     <color name="received_message_background">#D2D79F</color>
     <color name="sent_message_background">#C8B6A6</color>
+    <color name="signup_input_background">#90D6D5D5</color>
     <color name="dark_brown">#362222</color>
 </resources>
