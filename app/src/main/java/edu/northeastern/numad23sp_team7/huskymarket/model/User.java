@@ -5,31 +5,20 @@ import java.util.List;
 
 public class User {
     private String username;
-    private String userId;
     private String email;
-    private String password;
     private String profileImage;
     private List<Product> favorites = new ArrayList<>();
 
     public User() {
     }
 
-    public User(String username, String userId, String email, String password, String profileImage, List<Product> favorites) {
+    public User(String username, String email, String profileImage, List<Product> favorites) {
         this.username = username;
-        this.userId = userId;
         this.email = email;
-        this.password = password;
         this.profileImage = profileImage;
         this.favorites = favorites;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public String getEmail() {
         return email;
@@ -39,13 +28,6 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getProfileImage() {
         return profileImage;
