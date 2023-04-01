@@ -122,7 +122,7 @@
                     android:animateLayoutChanges="true">
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/buttonSignIn"
+                        android:id="@+id/buttonLogin"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_50sdp"
                         android:fontFamily="@font/poppins_regular"
@@ -161,7 +161,7 @@
                     android:fontFamily="@font/poppins_regular"
                     android:text="Sign up"
                     android:textColor="@color/dark_brown"
-                    android:textSize="@dimen/_10ssp"
+                    android:textSize="@dimen/_12ssp"
                     android:textStyle="bold" />
 
             </LinearLayout>

@@ -66,7 +66,7 @@ public class HuskySignupActivity extends AppCompatActivity {
 
         // sign up
         binding.buttonSignUp.setOnClickListener(v -> {
-            if(isValidSignupInfo()) {
+            if (isValidSignupInfo()) {
                 loading(true);
                 String email = binding.inputEmail.getText().toString().trim();
                 String password = binding.inputPassword.getText().toString();
@@ -74,14 +74,14 @@ public class HuskySignupActivity extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()) {
+                                if (task.isSuccessful()) {
                                     FirebaseUser authUser = mAuth.getCurrentUser();
                                     String userUid = authUser.getUid();
                                     String username = binding.inputUsername.getText().toString().trim();
-                                    if(encodedImage == null) {
+                                    if (encodedImage == null) {
                                         setDefaultProfileImage();
                                     }
-                                    User user = new User(username,email,encodedImage, new ArrayList<>());
+                                    User user = new User(username, email, encodedImage, new ArrayList<>());
                                     FirebaseFirestore database = FirebaseFirestore.getInstance();
                                     database.collection(Constants.KEY_COLLECTION_USERS)
                                             .document(userUid)
@@ -90,7 +90,7 @@ public class HuskySignupActivity extends AppCompatActivity {
                                                 // User added to Firestore database successfully
                                                 loading(false);
                                                 preferenceManager.putString(Constants.KEY_USER_ID, userUid);
-                                                preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                                                preferenceManager.putBoolean(Constants.KEY_IS_LOGGED_IN, true);
                                                 preferenceManager.putString(Constants.KEY_USERNAME, username);
                                                 preferenceManager.putString(Constants.KEY_EMAIL, email);
                                                 preferenceManager.putString(Constants.KEY_PROFILE_IMAGE, encodedImage);
