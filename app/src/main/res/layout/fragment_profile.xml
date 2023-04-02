@@ -36,7 +36,7 @@
                 app:riv_oval="true" />
 
             <ImageView
-                android:id="@+id/iconEditProfile"
+                android:id="@+id/iconEditProfileImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_edit"
@@ -129,7 +129,7 @@
                             android:text="Posts"
                             android:textAlignment="center"
                             android:textColor="@color/primary_dark"
-                            android:textSize="@dimen/_12ssp" />
+                            android:textSize="@dimen/_10ssp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -164,7 +164,7 @@
                             android:text="Sold"
                             android:textAlignment="center"
                             android:textColor="@color/primary_dark"
-                            android:textSize="@dimen/_12ssp" />
+                            android:textSize="@dimen/_10ssp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -199,7 +199,7 @@
                             android:text="Earnings"
                             android:textAlignment="center"
                             android:textColor="@color/primary_dark"
-                            android:textSize="@dimen/_12ssp" />
+                            android:textSize="@dimen/_10ssp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -285,14 +285,6 @@
                         android:text="test1"
                         android:textSize="@dimen/_13ssp" />
 
-                    <ImageView
-                        android:id="@+id/iconEditUsername"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:paddingStart="@dimen/_10sdp"
-                        android:src="@drawable/ic_edit"
-                        app:tint="@color/primary_dark" />
 
                 </LinearLayout>
 
