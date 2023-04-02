@@ -7,7 +7,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import edu.northeastern.numad23sp_team7.databinding.ItemReceivedMessageBinding;
 import edu.northeastern.numad23sp_team7.databinding.ItemSentMessageBinding;
@@ -63,6 +66,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
+
     public static class SentMessageViewHolder extends RecyclerView.ViewHolder {
 
         private final ItemSentMessageBinding binding;
@@ -74,8 +78,12 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public void setData(ChatMessage chatMessage, Bitmap senderProfileImage) {
             binding.textMessage.setText(chatMessage.getMessage());
-            binding.textDateTime.setText(chatMessage.getDateText());
+            binding.textDateTime.setText(getDateTimeText(chatMessage.getDateObject()));
             binding.imageProfile.setImageBitmap(senderProfileImage);
+        }
+
+        private String getDateTimeText(Date date) {
+            return new SimpleDateFormat("MMMM dd, yyyy - hh:mm a", Locale.getDefault()).format(date);
         }
 
     }
@@ -91,8 +99,12 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public void setData(ChatMessage chatMessage, Bitmap receiverProfileImage) {
             binding.textMessage.setText(chatMessage.getMessage());
-            binding.textDateTime.setText(chatMessage.getDateText());
+            binding.textDateTime.setText(getDateTimeText(chatMessage.getDateObject()));
             binding.imageProfile.setImageBitmap(receiverProfileImage);
+        }
+
+        private String getDateTimeText(Date date) {
+            return new SimpleDateFormat("MMMM dd, yyyy - hh:mm a", Locale.getDefault()).format(date);
         }
     }
 }

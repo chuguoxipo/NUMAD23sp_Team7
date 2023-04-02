@@ -76,12 +76,13 @@ public class HuskySignupActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     FirebaseUser authUser = mAuth.getCurrentUser();
+                                    assert authUser != null;
                                     String userUid = authUser.getUid();
                                     String username = binding.inputUsername.getText().toString().trim();
                                     if (encodedImage == null) {
                                         setDefaultProfileImage();
                                     }
-                                    User user = new User(username, email, encodedImage, new ArrayList<>());
+                                    User user = new User(userUid,username, email, encodedImage, new ArrayList<>());
                                     FirebaseFirestore database = FirebaseFirestore.getInstance();
                                     database.collection(Constants.KEY_COLLECTION_USERS)
                                             .document(userUid)

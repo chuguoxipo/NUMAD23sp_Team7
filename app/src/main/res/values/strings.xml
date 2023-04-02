@@ -52,5 +52,6 @@
     <string name="already_have_an_account">Already have an account?</string>
     <string name="upload_profile_image">Upload Profile Image</string>
     <string name="sign_up">Sign up</string>
+    <string name="email_">Email:</string>
 
 </resources>

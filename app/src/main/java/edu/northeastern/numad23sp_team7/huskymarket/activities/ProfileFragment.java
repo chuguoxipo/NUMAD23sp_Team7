@@ -34,17 +34,9 @@ public class ProfileFragment extends Fragment {
         preferenceManager = new PreferenceManager(requireContext());
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(getLayoutInflater());
-//        binding.buttonSignUp.setOnClickListener(v -> {
-//            Intent i = new Intent(getActivity(), HuskySignupActivity.class);
-//            startActivity(i);
-//        });
-//
-//        binding.buttonLogin.setOnClickListener(v -> {
-//            Intent i = new Intent(getActivity(), HuskyLoginActivity.class);
-//            startActivity(i);
-//        });
 
-        binding.imageLogout.setOnClickListener(v -> {
+
+        binding.iconLogout.setOnClickListener(v -> {
             if(mAuth.getCurrentUser() != null) {
                 mAuth.signOut();
                 preferenceManager.clear();

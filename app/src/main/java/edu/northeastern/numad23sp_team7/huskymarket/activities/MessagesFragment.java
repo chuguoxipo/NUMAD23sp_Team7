@@ -1,66 +1,81 @@
 package edu.northeastern.numad23sp_team7.huskymarket.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import edu.northeastern.numad23sp_team7.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MessagesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import edu.northeastern.numad23sp_team7.R;
+import edu.northeastern.numad23sp_team7.databinding.FragmentMessagesBinding;
+import edu.northeastern.numad23sp_team7.databinding.FragmentProfileBinding;
+import edu.northeastern.numad23sp_team7.huskymarket.model.User;
+import edu.northeastern.numad23sp_team7.huskymarket.utils.Constants;
+import edu.northeastern.numad23sp_team7.huskymarket.utils.PreferenceManager;
+
 public class MessagesFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private FragmentMessagesBinding binding;
+    private PreferenceManager preferenceManager;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore database;
 
     public MessagesFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MessagesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MessagesFragment newInstance(String param1, String param2) {
-        MessagesFragment fragment = new MessagesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseFirestore.getInstance();
+        preferenceManager = new PreferenceManager(requireContext());
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_messages, container, false);
+        binding = FragmentMessagesBinding.inflate(getLayoutInflater());
+
+        binding.buttonChat.setOnClickListener(v -> {
+
+            DocumentReference docRef = database
+                    .collection(Constants.KEY_COLLECTION_USERS)
+                    .document("D9gtlUubrMYR9UZyCQlc18uAr7r2"); // change to receiverID
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            User receiver = document.toObject(User.class);
+                            assert receiver != null;
+                            Log.d("message", "onComplete: "+ receiver.getUsername());
+                            Intent intent = new Intent(getActivity(), ChatActivity.class);
+                            intent.putExtra(Constants.KEY_USER, receiver);
+                            startActivity(intent);
+
+                        } else {
+                            Log.d("TAG", "No such document");
+                        }
+                    } else {
+                        Log.d("TAG", "get failed with ", task.getException());
+                    }
+                }
+            });
+
+        });
+
+        return binding.getRoot();
     }
 }

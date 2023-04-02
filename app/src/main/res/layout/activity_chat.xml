@@ -40,17 +40,18 @@
 
 
     <TextView
-        android:id="@+id/textName"
+        android:id="@+id/textReceiverName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_46sdp"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="1"
         android:textColor="@color/light_gray"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
+        android:text="Jessica"
         app:layout_constraintBottom_toBottomOf="@id/imageBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imageBack"
