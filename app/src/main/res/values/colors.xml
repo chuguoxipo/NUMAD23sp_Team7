@@ -13,4 +13,6 @@
     <color name="sent_message_background">#C8B6A6</color>
     <color name="signup_input_background">#90D6D5D5</color>
     <color name="dark_brown">#362222</color>
+    <color name="dark_gray">#565656</color>
+    <color name="gray">#A8A8A8</color>
 </resources>

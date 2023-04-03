@@ -39,6 +39,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".huskymarket.activities.SearchActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".huskymarket.activities.CreatePostActivity"
             android:exported="false">
             <meta-data

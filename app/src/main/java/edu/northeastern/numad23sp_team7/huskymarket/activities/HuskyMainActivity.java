@@ -28,8 +28,7 @@ public class HuskyMainActivity extends AppCompatActivity {
         binding.bottomMenu.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.navHome:
-//                    changeFragment(new HomeFragment());
-                    changeFragment(new SearchFragment());
+                    changeFragment(new HomeFragment());
                     break;
                 case R.id.navSellings:
                     changeFragment(new SellingsFragment());
