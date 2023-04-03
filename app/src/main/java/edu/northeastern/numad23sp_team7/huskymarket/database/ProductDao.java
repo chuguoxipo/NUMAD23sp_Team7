@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 import edu.northeastern.numad23sp_team7.huskymarket.model.Product;
 
-public class DatabaseClient {
+public class ProductDao {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final CollectionReference productsRef = db.collection("products");
     private final static String TAG = "Database Client";

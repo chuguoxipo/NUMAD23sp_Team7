@@ -4,22 +4,16 @@ package edu.northeastern.numad23sp_team7.huskymarket.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import edu.northeastern.numad23sp_team7.databinding.ActivitySearchBinding;
 import edu.northeastern.numad23sp_team7.huskymarket.adapter.SearchResultAdapter;
-import edu.northeastern.numad23sp_team7.huskymarket.database.DatabaseClient;
+import edu.northeastern.numad23sp_team7.huskymarket.database.ProductDao;
 import edu.northeastern.numad23sp_team7.huskymarket.model.Product;
 
 public class SearchActivity extends AppCompatActivity {
@@ -29,7 +23,7 @@ public class SearchActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private static final String TAG = "Husky Search";
     private Spinner spinner;
-    private static final DatabaseClient dbClient = new DatabaseClient();
+    private static final ProductDao dbClient = new ProductDao();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
