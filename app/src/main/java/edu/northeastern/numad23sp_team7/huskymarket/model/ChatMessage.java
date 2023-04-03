@@ -9,26 +9,26 @@ public class ChatMessage {
     private String senderId;
     private String receiverId;
     private String message;
-    private Date dateObject;
+    private Date timestamp;
 
 
     public ChatMessage() {
     }
 
-    public ChatMessage(String senderId, String receiverId, String message, Date dateObject) {
+    public ChatMessage(String senderId, String receiverId, String message, Date timestamp) {
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.message = message;
-        this.dateObject = dateObject;
+        this.timestamp = timestamp;
     }
 
 
-    public Date getDateObject() {
-        return dateObject;
+    public Date getTimestamp() {
+        return timestamp;
     }
 
-    public void setDateObject(Date dateObject) {
-        this.dateObject = dateObject;
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getSenderId() {

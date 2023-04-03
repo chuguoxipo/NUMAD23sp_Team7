@@ -10,6 +10,7 @@ import android.widget.Button;
 import edu.northeastern.numad23sp_team7.FireBaseModel.LogInActivity;
 import edu.northeastern.numad23sp_team7.huskymarket.activities.HuskyLoginActivity;
 import edu.northeastern.numad23sp_team7.huskymarket.activities.HuskyMainActivity;
+import edu.northeastern.numad23sp_team7.huskymarket.activities.SearchActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,5 +67,7 @@ public class MainActivity extends AppCompatActivity {
     public void goToGroupProject() {
         Intent intent = new Intent(this, HuskyLoginActivity.class);
         startActivity(intent);
+//        Intent intent = new Intent(this, SearchActivity.class);
+//        startActivity(intent);
     }
 }
