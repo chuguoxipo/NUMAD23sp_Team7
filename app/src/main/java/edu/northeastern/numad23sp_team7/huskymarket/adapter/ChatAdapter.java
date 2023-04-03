@@ -78,7 +78,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public void setData(ChatMessage chatMessage, Bitmap senderProfileImage) {
             binding.textMessage.setText(chatMessage.getMessage());
-            binding.textDateTime.setText(getDateTimeText(chatMessage.getDateObject()));
+            binding.textDateTime.setText(getDateTimeText(chatMessage.getTimestamp()));
             binding.imageProfile.setImageBitmap(senderProfileImage);
         }
 
@@ -99,7 +99,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public void setData(ChatMessage chatMessage, Bitmap receiverProfileImage) {
             binding.textMessage.setText(chatMessage.getMessage());
-            binding.textDateTime.setText(getDateTimeText(chatMessage.getDateObject()));
+            binding.textDateTime.setText(getDateTimeText(chatMessage.getTimestamp()));
             binding.imageProfile.setImageBitmap(receiverProfileImage);
         }
 
