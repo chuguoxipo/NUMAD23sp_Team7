@@ -18,6 +18,7 @@ import edu.northeastern.numad23sp_team7.databinding.ActivitySearchBinding;
 import edu.northeastern.numad23sp_team7.huskymarket.adapter.SearchResultAdapter;
 import edu.northeastern.numad23sp_team7.huskymarket.database.ProductDao;
 import edu.northeastern.numad23sp_team7.huskymarket.model.Product;
+import edu.northeastern.numad23sp_team7.huskymarket.utils.Constants;
 
 public class SearchActivity extends AppCompatActivity {
     ActivitySearchBinding binding;
@@ -38,8 +39,8 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         searchResultAdapter = new SearchResultAdapter(products);
         binding.recyclerViewHuskySearchResult.setAdapter(searchResultAdapter);
-        initializeData();
-        dbClient.addProducts(products);
+//        initializeData();
+//        dbClient.addProducts(products);
 
         // Search bar
         binding.editTextHuskySearchBox.setOnEditorActionListener((textView, actionId, keyEvent) -> {
@@ -88,8 +89,8 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void initializeData() {
-        String[] locations = getResources().getStringArray(binding.getRoot().getResources().getIdentifier("locations", "array", getPackageName()));
-        String[] categories = getResources().getStringArray(binding.getRoot().getResources().getIdentifier("categories", "array", getPackageName()));
+        String[] locations = getResources().getStringArray(binding.getRoot().getResources().getIdentifier(Constants.KEY_PRODUCT_LOCATION_ARRAY, "array", getPackageName()));
+        String[] categories = getResources().getStringArray(binding.getRoot().getResources().getIdentifier(Constants.KEY_PRODUCT_CATEGORY_ARRAY, "array", getPackageName()));
         for (int i = 0; i < 10; i++) {
             Product product = new Product();
             product.setDescription("Product " + i);

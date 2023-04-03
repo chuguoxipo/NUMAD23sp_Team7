@@ -18,20 +18,17 @@ public class ProductDao {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final CollectionReference productsRef = db.collection(Constants.KEY_COLLECTION_PRODUCTS);
     private final static String TAG = "Database Client";
-    private static final String SEARCH_TERM_ATTRIBUTE = "description";
-    private static final String CATEGORY_ATTRIBUTE = "category";
-    private static final String LOCATION_ATTRIBUTE = "location";
 
     public void getProducts(String searchTerm, String category, String location, final Consumer<ArrayList<Product>> callback) {
         ArrayList<Product> products = new ArrayList<>();
         Query productsQuery = productsRef;
 
         if (!category.isEmpty()) {
-            productsQuery = productsQuery.whereEqualTo(CATEGORY_ATTRIBUTE, category);
+            productsQuery = productsQuery.whereEqualTo(Constants.KEY_PRODUCT_CATEGORY, category);
         }
 
         if (!location.isEmpty()) {
-            productsQuery = productsQuery.whereEqualTo(LOCATION_ATTRIBUTE, location);
+            productsQuery = productsQuery.whereEqualTo(Constants.KEY_PRODUCT_LOCATION, location);
         }
 
         productsQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
